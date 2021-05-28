@@ -43,3 +43,9 @@ module.exports.validateLoginInput = (username, password) => {
         valid: Object.keys(errors).length < 1
     };
 };
+
+module.exports.validatePollCreation = (pollName,createdBy,createdAt,Active) => {
+    if(pollName.trim() === ''){
+        errors.pollname = "Pollname must not be empty";
+    }
+}

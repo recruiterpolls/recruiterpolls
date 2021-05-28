@@ -10,6 +10,8 @@ type User {
 }
 type Poll {
     id: ID!
+    pollTitle: String! 
+    pollDescription: String!
     createdAt: String!
     createdBy: User
     active: Boolean
