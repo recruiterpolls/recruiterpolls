@@ -1,0 +1,97 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.navbarText {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.navbarRecruiter {
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 200;
+  color: #4183C4;
+}
+
+.navbarPolls {
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 200;
+  color: #21BA45;
+}
+
+.myPollsCreatePoll {
+  background-color: #21BA45 !important;
+  color:  white !important;
+}
+
+.innerContainer {
+  width: 1000px !important;
+  max-width: 700px !important;
+  margin: 30px 10px !important;
+}
+.text {
+  float: left;
+}
+
+.others {
+  float: right;
+}
+
+.block:after {
+  content: ":"
+}
+
+.input {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 10px 0;
+}
+
+.createPollButton {
+  background-color: #21BA45 !important;
+  color: white !important;
+}
+
+.closePollButton {
+  background-color: #EA2525!important;
+  color: white !important;
+}
