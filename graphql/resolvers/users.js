@@ -10,7 +10,7 @@ const {
   } = require('apollo-server');
 
 const {SECRET} = require('../../privateVariables');
-const { extendSchemaImpl } = require('graphql/utilities/extendSchema');
+
 const saltRounds = 10;
 
 const getToken = ({ id, username, email }) =>
@@ -27,7 +27,7 @@ const getToken = ({ id, username, email }) =>
 
 module.exports = {
     Mutation: {
-        async register(_, {registerInput : {username, email, password, confirmPassword}}) {
+        async register(_, {registerInput : {email, password, confirmPassword}}) {
             
             // Generating hash for password 
             /*var hash = bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -35,20 +35,12 @@ module.exports = {
                     return hash;
                 });
             });*/
-            const { errors, valid } = validateRegisterInput(username, email, password, confirmPassword);
+            const { errors, valid } = validateRegisterInput(email, password, confirmPassword);
             if (!valid) {
                 throw new UserInputError('Error', { errors });
             }
 
-            var user = await User.findOne({ username, $email });
-            if(user) {
-                if (user.email == extendSchemaImpl) {
-                    throw new ValidationError('Email and username taken.');
-                }
-                throw new ValidationError('Username taken.');
-            }
-
-            user = await User.findOne({ email });
+            const user = await User.findOne({ email });
             if(user) {
                 throw new ValidationError('Email already being used.');
             }
@@ -57,10 +49,10 @@ module.exports = {
 
             const newUser = new User({
                 email,
-                username,
                 password,
                 createdAt: new Date().toISOString()
             });
+
             const res = await newUser.save();
             const token = getToken(newUser);
             
@@ -69,7 +61,26 @@ module.exports = {
                 ...res._doc,
                 token
             };
+        }, async login(_, {loginInput : {email, password,}}) {
+            const { errors, valid } = validateLoginInput(email, password);
             
+            if (!valid) {
+                throw new UserInputError('Error', { errors });
+            }
+
+            const user = await User.findOne({ email });
+            if (!user) throw new AuthenticationError('User not found');
+
+            const match = await bcrypt.compare(password, user.password);
+            if (!match) throw new AuthenticationError('Incorrect password');
+
+            const token = getToken(user);
+            
+            return {
+                id: user.id,
+                ...user._doc,
+                token
+            };
         }
     },
     Query: {
@@ -80,13 +91,28 @@ module.exports = {
  /*
 mutation {
   	register(registerInput: {
-      username: "THIRDUSER THIRD ONE  COOPER Lappenbusch is the BEST in the world  ",
-      email:"email@email.com",
-      password:"pass pass",
-      confirmPassword:"asdf"
+      email:"thisnew121@email.com",
+      password:"themegapassword",
+      confirmPassword:"themegapassword"
     }) {
-      username
       id
+    	token
+    	email
+    	createdAt
+    	password
+    }
+}
+
+mutation {
+    login(loginInput: {
+        email: "thisnew121@email.com",
+        password: "themegapassword"
+    }) {
+        id
+    	token
+    	email
+    	createdAt
+    	password
     }
 }
  */

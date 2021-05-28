@@ -10,8 +10,8 @@ type User {
 }
 type Poll {
     id: ID!
-    pollTitle: String! 
-    pollDescription: String!
+    title: String! 
+    description: String!
     createdAt: String!
     createdBy: User
     active: Boolean
@@ -20,6 +20,8 @@ type Poll {
 }
 
 type PollQuestion {
+    title: String!
+    description: String!
     questionType: String!
     required: Boolean!
     options: [String]
@@ -46,5 +48,6 @@ type Query {
 
 type Mutation {
     register(registerInput: RegisterInput): User!
+    login(loginInput: LoginInput): User!
 }
 `
