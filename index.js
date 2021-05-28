@@ -10,7 +10,15 @@ const  MONGODB  = "mongodb+srv://admin:adminpass@cluster0.3yynb.mongodb.net/recr
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req })
+    //context: ({ req }) => ({ req })
+    context: ({ req }) => {
+        // get the authorization from the request headers
+        // return a context obj with our token. if any!
+        const auth = req.headers.authorization || '';
+        return {
+          auth
+        };
+    }
 });
 
 mongoose.connect(MONGODB, {useNewUrlParser: true})

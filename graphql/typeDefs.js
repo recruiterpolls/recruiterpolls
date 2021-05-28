@@ -4,9 +4,9 @@ module.exports = gql`
 type User {
     id: ID!
     email: String!
-    token: String!
-    username: String!
+    token: String
     createdAt: String!
+    password: String!
 }
 type Poll {
     id: ID!
@@ -31,16 +31,19 @@ type PollResponse{
     response: [String]
 }
 input RegisterInput {
-    username: String!
     password: String!
     confirmPassword: String!
     email: String!
 }
-
+input LoginInput {
+    email: String!
+    password: String!
+}
 
 type Query {
     user(id: ID!): User
 }
+
 type Mutation {
     register(registerInput: RegisterInput): User!
 }
