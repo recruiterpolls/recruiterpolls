@@ -18,7 +18,10 @@ module.exports = {
     Query: {
         user: (_, {ID}) => User.findById(ID),
     },
- };
+    Mutation:{
+        async 
+    }
+};
 
  /*
 mutation {
