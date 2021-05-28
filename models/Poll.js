@@ -9,4 +9,14 @@ const pollSchema = new Schema({
     Active: Boolean, 
 });
 
+
+
+
+
+
+
+
+
+
+
 module.exports = model('Poll', pollSchema);
