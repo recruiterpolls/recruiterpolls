@@ -44,6 +44,7 @@ input LoginInput {
 
 type Query {
     user(id: ID!): User
+    poll(id: ID!): Poll
 }
 
 type Mutation {
