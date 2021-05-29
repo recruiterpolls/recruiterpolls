@@ -1,2 +1,0 @@
-# recruiterpolls
-recruiter repo 
