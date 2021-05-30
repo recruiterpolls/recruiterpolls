@@ -5,6 +5,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { Grid, Header, Button, Dropdown, Card, Transition } from 'semantic-ui-react';
 
 import "../App.css";
+import { buildQueryFromSelectionSet } from '@apollo/client/utilities';
+import PollCard from '../components/PollCard';
 
 function MyPolls() {
     const filterOptions = [
@@ -12,6 +14,28 @@ function MyPolls() {
             key: 'ASDF',
             text: 'ASDF',
             value: 'ASDF'
+        }
+    ]
+    const polls = [
+        {
+            id: "1",
+            title: "Post one",
+        },
+        {
+            id: "2",
+            title: "Post two",
+        },
+        {
+            id: "3",
+            title: "Post three",
+        },
+        {
+            id: "4",
+            title: "Post four",
+        },
+        {
+            id: "5",
+            title: "Post five",
         }
     ]
     
@@ -38,44 +62,20 @@ function MyPolls() {
             <Grid columns={3} style={{margin: '0 auto'}}>
                 
                 <Grid.Row>
-
-                    <Grid.Column>
-                        <Card>
-                            <Card.Content>
-                                <Card.Header>WSU Sophomores Summer 2020</Card.Header>
-                                <Card.Meta>3 days ago</Card.Meta>
-                                <Card.Description>
-                                Matthew is a pianist living in Nashville.
-                                </Card.Description>
-                            </Card.Content>
-                        </Card>
-                    </Grid.Column>
-
-                    <Grid.Column>
-                        <Card>
-                            <Card.Content>
-                                <Card.Header>WSU Sophomores Summer 2020</Card.Header>
-                                <Card.Meta>3 days ago</Card.Meta>
-                                <Card.Description>
-                                Matthew is a pianist living in Nashville.
-                                </Card.Description>
-                            </Card.Content>
-                        </Card>
-                    </Grid.Column>
-
-                    <Grid.Column>
-                        <Card>
-                            <Card.Content>
-                                <Card.Header>WSU Sophomores Summer 2020</Card.Header>
-                                <Card.Meta>3 days ago</Card.Meta>
-                                <Card.Description>
-                                Matthew is a pianist living in Nashville.
-                                </Card.Description>
-                            </Card.Content>
-                        </Card>
-                    </Grid.Column>
+                
+                    <Transition.Group duration={200}>
+                        {
+                            polls && polls.map((poll) => (
+                                <Grid.Column key={poll.id} style={{marginBottom: '20px'}}>
+                                    <PollCard poll={poll} />
+                                </Grid.Column>
+                            ))
+                        }
+                    </Transition.Group>
                     
+                
                 </Grid.Row>
+                    
             </Grid>
         </>
     );
@@ -84,3 +84,9 @@ function MyPolls() {
 
 
 export default MyPolls;
+
+
+
+
+
+

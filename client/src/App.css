@@ -64,8 +64,8 @@
 }
 
 .innerContainer {
-  width: 1000px !important;
-  max-width: 700px !important;
+  width: 1400px !important;
+  max-width: 800px !important;
   margin: 30px 10px !important;
 }
 .text {
@@ -94,4 +94,26 @@
 .closePollButton {
   background-color: #EA2525!important;
   color: white !important;
+}
+
+.listUnstyled {
+  list-style: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+#x {
+  position: absolute !important;
+  top: 5px !important;
+  right: 15px !important;
+}
+
+.ui.dimmer {
+  z-index: 990 !important;
+}
+
+.box {
+  display: flex !important;
+  margin: auto auto !important;
+  align-items: center;
 }

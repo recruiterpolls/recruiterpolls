@@ -95,8 +95,8 @@ mutation {
       password:"themegapassword",
       confirmPassword:"themegapassword"
     }) {
-      id
-    	token
+        id
+        token
     	email
     	createdAt
     	password
@@ -115,4 +115,18 @@ mutation {
     	password
     }
 }
+
+mutation {
+  	getPostResponses(
+      userID:"thisnew121@email.com",
+      postID:"themegapassword"
+    ) {
+        id
+        token
+    	email
+    	createdAt
+    	password
+    }
+}
+
  */

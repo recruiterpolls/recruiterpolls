@@ -11,23 +11,26 @@ import PollAnalytics from './pages/PollAnalytics';
 import MyPolls from './pages/MyPolls';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import { QuestionProvider } from './components/QuestionContext';
 
 
 
 function App() {
   return (
-    <Router>
-      <Container>
-        <Navbar />
-        <Container className="innerContainer">
-          <Route exact path='/' component={MyPolls}></Route>
-          <Route exact path='/createpoll' component={CreatePoll}></Route>
-          <Route exact path='/analytics' component={PollAnalytics}></Route>
-          <Route exact path='/login' component={LoginPage}></Route>
-          <Route exact path='/register' component={RegisterPage}></Route>
+    <QuestionProvider>
+      <Router>
+        <Container>
+          <Navbar />
+          <Container className="innerContainer">
+            <Route exact path='/' component={MyPolls}></Route>
+            <Route exact path='/createpoll' component={CreatePoll}></Route>
+            <Route exact path='/analytics' component={PollAnalytics}></Route>
+            <Route exact path='/login' component={LoginPage}></Route>
+            <Route exact path='/register' component={RegisterPage}></Route>
+          </Container>
         </Container>
-      </Container>
-    </Router>
+      </Router>
+    </QuestionProvider>
   );
 }
 
