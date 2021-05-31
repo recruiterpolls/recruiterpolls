@@ -15,8 +15,8 @@ type Poll {
     createdAt: String!
     createdBy: User
     active: Boolean
-    questions: [PollQuestion]
-    responses: [PollResponse]
+    questions: [PollQuestion]!
+    responses: [PollResponse]!
 }
 
 type PollQuestion {
@@ -27,7 +27,7 @@ type PollQuestion {
     options: [String]
 }
 
-type PollResponse{
+type PollResponse {
     name: String!
     email: String!
     response: [String]
@@ -42,6 +42,16 @@ input LoginInput {
     password: String!
 }
 
+input createPollInput {
+    title: String! 
+    description: String!
+    createdBy: String
+}
+
+input createPollResponseInput {
+    responses: [String]!
+}
+
 type Query {
     user(id: ID!): User
     poll(id: ID!): Poll
@@ -50,5 +60,7 @@ type Query {
 type Mutation {
     register(registerInput: RegisterInput): User!
     login(loginInput: LoginInput): User!
+    createPoll(pollInput: createPollInput): Poll!
+    createPollResponse(pollResponseInput: createPollResponseInput): Poll!
 }
 `

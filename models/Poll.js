@@ -5,8 +5,7 @@ const pollSchema = new Schema({
     pollID: String,
     pollName: String,
     createdBy: String,
-    createdAt: String,
-    Active: Boolean, 
+    createdAt: String
 });
 
 
