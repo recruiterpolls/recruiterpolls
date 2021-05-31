@@ -1,5 +1,4 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 const Poll = require('../../models/Poll');
 const { validatePollCreation, validatePollResponse } = require('../../util/validators');
 const {
@@ -15,33 +14,33 @@ module.exports = {
     Mutation: {
         //async register(_, {registerInput : {username, email, password, confirmPassword}}) {
             //                           "title","desc stuf", "createdBy", True, "[{question1object}, {question2object}, {question3object}]"
-        async createPoll(_, {pollInput: {title, description, createdBy, active, questions}}){
-            const{errors, valid} = validatePollCreation(title, description, createdBy, active, json.stringify(questions));
-            if(!valid) {
+        async createPoll(_, {createPollInput: {title, description, createdBy, active, questions}}){
+         
+            console.log("1"); 
+            const{errors, valid} = validatePollCreation(title, JSON.parse(questions));
+            
+            if (!valid) {
                 throw new UserInputError('Error', { errors });
             }
-
-            active = true;
-
+            console.log("2");
             const newPoll = new Poll({
                 title,
                 description,
-                createdAt: new Date().toISOString(),
+                //createdAt: new Date().toISOString(),
                 createdBy,
+                active,
                 questions
             });
-
+            console.log("3");
             const res = await newPoll.save();
-            const GetData = getData(newPoll);
-
-            return {
+            console.log(res);
+            console.log("4");
+            return{
                 id: res.id,
-                ...res._doc,
-                title
-
-
+                ...res._doc
+                
             };
-
+                
         /*
         }, async createPollResponse(_,{pollResponseInput: {responses}}){
             const{errors, valid} = validatePollResponse(responses);

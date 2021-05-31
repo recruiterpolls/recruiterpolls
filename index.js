@@ -2,7 +2,7 @@ const { ApolloServer, PubSub } = require('apollo-server');
 const mongoose = require('mongoose');
 
 const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers/users');
+const resolvers = require('./graphql/resolvers');
 
 
 const  MONGODB  = "mongodb+srv://admin:adminpass@cluster0.3yynb.mongodb.net/recruiterDB?retryWrites=true&w=majority"
@@ -10,7 +10,8 @@ const  MONGODB  = "mongodb+srv://admin:adminpass@cluster0.3yynb.mongodb.net/recr
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    //context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req })
+   /*
     context: ({ req }) => {
         // get the authorization from the request headers
         // return a context obj with our token. if any!
@@ -19,6 +20,7 @@ const server = new ApolloServer({
           auth
         };
     }
+    */
 });
 
 mongoose.connect(MONGODB, {useNewUrlParser: true})

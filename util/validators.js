@@ -39,6 +39,7 @@ module.exports.validatePollCreation = (title, questions) => {
     if(title.trim() === ''){
         errors.title = "Pollname must not be empty";
     }
+    /*
     for(var i = 0; i < questions.length; i++){
         
         if(questions[i].title.trim() === ''){
@@ -54,7 +55,7 @@ module.exports.validatePollCreation = (title, questions) => {
             }
         }
     }
-
+    */
     return {
         errors,
         valid: Object.keys(errors).length < 1
