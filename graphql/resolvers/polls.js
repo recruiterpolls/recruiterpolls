@@ -14,6 +14,7 @@ module.exports = {
     
     Mutation: {
         //async register(_, {registerInput : {username, email, password, confirmPassword}}) {
+            //                           "title","desc stuf", "createdBy", True, "[{question1object}, {question2object}, {question3object}]"
         async createPoll(_, {pollInput: {title, description, createdBy, active, questions}}){
             const{errors, valid} = validatePollCreation(title, description, createdBy, active, json.stringify(questions));
             if(!valid) {
@@ -33,7 +34,7 @@ module.exports = {
             const res = await newPoll.save();
             const GetData = getData(newPoll);
 
-            return{
+            return {
                 id: res.id,
                 ...res._doc,
                 title
@@ -41,14 +42,14 @@ module.exports = {
 
             };
 
-       /*
+        /*
         }, async createPollResponse(_,{pollResponseInput: {responses}}){
             const{errors, valid} = validatePollResponse(responses);
             if(!valid) {
                 throw new UserInputError('Error', { errors });
             }
         }, async createPollQuestions(_,{pollQuestionInput})
-         */   
+        */   
             
         }
     },
