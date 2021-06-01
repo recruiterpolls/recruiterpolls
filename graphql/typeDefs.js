@@ -56,7 +56,7 @@ input createPollResponseInput {
 
 type Query {
     user(id: ID!): User
-    poll(id: ID!): Poll
+    poll(id: String!): Poll
 }
 
 type Mutation {

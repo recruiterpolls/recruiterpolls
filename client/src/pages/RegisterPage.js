@@ -22,16 +22,16 @@ function RegisterPage() {
             </Grid>
             <hr></hr>
             <Form>
-                        <Form.Field>
-                        <Input label="Email"></Input>
-                        </Form.Field>
-                    </Form>
-                    
-                    <Form>
-                        <Form.Field>
-                        <Input label="Password"></Input>
-                        </Form.Field>
-                    </Form>
+                <Form.Field>
+                <Input label="Email"></Input>
+                </Form.Field>
+            </Form>
+            
+            <Form>
+                <Form.Field>
+                <Input label="Password"></Input>
+                </Form.Field>
+            </Form>
             <Button color="blue">Register</Button>
         </>
     );

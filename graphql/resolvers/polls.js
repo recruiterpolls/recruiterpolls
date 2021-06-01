@@ -54,6 +54,6 @@ module.exports = {
     },
 
     Query: {
-        poll: (_,{ID}) => Poll.findById(ID)
+        poll: (_,{id}) => Poll.findOne({_id: new mongodb.ObjectID(id)})
     },
  };

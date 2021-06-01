@@ -94,6 +94,7 @@
 .closePollButton {
   background-color: #EA2525!important;
   color: white !important;
+  margin-left: auto !important;
 }
 
 .listUnstyled {
@@ -113,6 +114,12 @@
 }
 
 .box {
+  display: flex !important;
+  margin: auto auto !important;
+  align-items: center;
+}
+
+.pollAnalyticsBox {
   display: flex !important;
   margin: auto auto !important;
   align-items: center;
