@@ -29,14 +29,14 @@ function Navbar(props) {
             as={Link}
             to="/"
           />
-          <Menu.Item
+          {/*<Menu.Item
             name='analytics'
             active={activeItem === 'analytics'}
             onClick={handleItemClick}
             className={"navbarText"}
             as={Link}
             to="/analytics"
-          >Analytics </Menu.Item>
+          >Analytics </Menu.Item>*/}
           <Menu.Item
             name='createpoll'
             active={activeItem === 'createpoll'}

@@ -105,7 +105,7 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
                 questions[i]["options"][optionsIndex] = value;
             }
         }
-        console.log(questions);
+        console.log(JSON.stringify(questions));
         setQuestions([...questions], questions);
     }; 
 

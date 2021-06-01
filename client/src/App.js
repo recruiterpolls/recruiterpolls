@@ -24,7 +24,7 @@ function App() {
           <Container className="innerContainer">
             <Route exact path='/' component={MyPolls}></Route>
             <Route exact path='/createpoll' component={CreatePoll}></Route>
-            <Route exact path='/analytics' component={PollAnalytics}></Route>
+            <Route exact path='/analytics/:id' component={PollAnalytics}></Route>
             <Route exact path='/login' component={LoginPage}></Route>
             <Route exact path='/register' component={RegisterPage}></Route>
           </Container>

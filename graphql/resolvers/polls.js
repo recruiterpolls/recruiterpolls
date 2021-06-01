@@ -16,13 +16,12 @@ module.exports = {
             //                           "title","desc stuf", "createdBy", True, "[{question1object}, {question2object}, {question3object}]"
         async createPoll(_, {createPollInput: {title, description, createdBy, active, questions}}){
          
-            console.log("1"); 
             const{errors, valid} = validatePollCreation(title, JSON.parse(questions));
             
             if (!valid) {
                 throw new UserInputError('Error', { errors });
             }
-            console.log("2");
+
             const newPoll = new Poll({
                 title,
                 description,
@@ -31,14 +30,12 @@ module.exports = {
                 active,
                 questions
             });
-            console.log("3");
+
             const res = await newPoll.save();
-            console.log(res);
-            console.log("4");
+
             return{
                 id: res.id,
                 ...res._doc
-                
             };
                 
         /*
