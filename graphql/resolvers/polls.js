@@ -1,4 +1,4 @@
-
+const mongodb = require('mongodb');
 const Poll = require('../../models/Poll');
 const { validatePollCreation, validatePollResponse } = require('../../util/validators');
 const {
@@ -47,6 +47,9 @@ module.exports = {
         }, async createPollQuestions(_,{pollQuestionInput})
         */   
             
+        }, async deletePoll(_, {id}){
+            const res = await Poll.deleteOne({_id: new mongodb.ObjectID(id)});
+            console.log(id);
         }
     },
 

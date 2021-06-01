@@ -64,5 +64,6 @@ type Mutation {
     login(loginInput: LoginInput): User!
     createPoll(createPollInput: CreatePollInput): Poll!
     createPollResponse(pollResponseInput: createPollResponseInput): Poll!
+    deletePoll(id:String!): Poll
 }
 `
