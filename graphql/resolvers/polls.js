@@ -1,11 +1,13 @@
 const mongodb = require('mongodb');
 const Poll = require('../../models/Poll');
+const pollResponse = require('../../models/PollResponse');
 const { validatePollCreation, validatePollResponse } = require('../../util/validators');
 const {
     UserInputError, // Throw an error if empty fields.
     AuthenticationError,
     ValidationError
   } = require('apollo-server');
+const PollResponse = require('../../models/PollResponse');
 ;
 
 
@@ -38,19 +40,49 @@ module.exports = {
                 ...res._doc
             };
                 
-        /*
-        }, async createPollResponse(_,{pollResponseInput: {responses}}){
-            const{errors, valid} = validatePollResponse(responses);
-            if(!valid) {
-                throw new UserInputError('Error', { errors });
-            }
-        }, async createPollQuestions(_,{pollQuestionInput})
-        */   
+        
             
         }, async deletePoll(_, {id}){
             const res = await Poll.deleteOne({_id: new mongodb.ObjectID(id)});
             console.log(id);
+        
+
+         
+        }, async createPollResponse(_,{pollResponseInput: {title, createdBy, responses}}){
+            
+            const{errors, valid} = validatePollResponse(title, JSON.parse(responses));
+            if(!valid) {
+                throw new UserInputError('Error', { errors });
+            }
+
+            console.log(title);
+            console.log(createdBy);
+            console.log(responses);
+            const newPollReponse = new pollResponse({
+                title,
+                createdBy, 
+                responses
+            });
+
+            const res = await newPollReponse.save();
+            console.log(res);
+
+            return{
+                id: res.id,
+                ...res._doc
+
+            };
+        }, async deletePollResponse(_, {id}){
+            //dont need to set to value res
+            const res = await PollResponse.deleteOne({
+                _id: new mongodb.ObjectID(id)
+            });
+            console.log(id)
         }
+        
+        //, async createPollQuestions(_,{pollQuestionInput})
+      
+
     },
 
     Query: {

@@ -62,13 +62,17 @@ module.exports.validatePollCreation = (title, questions) => {
     };
 };
 
-module.exports.validatePollResponse = (responses) => {
+module.exports.validatePollResponse = (title, responses) => {
     const errors = {};
+    if(title.trim() == ''){
+        errrors.title = "Response title must not be empty";
+    }
+    /*
     for(var i = 0; i < responses.length; i++){
         if(responses[i].name.trim() === ''){
             errors.responses = "Response in not valid";
         }
-        validateEmail(responses.email[i]);
+        //validateEmail(responses.email[i]);
 
         for(var q = 0; q < responses[i].response.length; q++){
             if(responses[i].response[q].trim() === ''){
@@ -77,6 +81,7 @@ module.exports.validatePollResponse = (responses) => {
         }
 
     }
+    */
     return{
         errors,
         valid: Object.keys(errors).length < 1
