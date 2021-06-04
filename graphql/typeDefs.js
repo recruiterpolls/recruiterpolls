@@ -17,7 +17,7 @@ type Poll {
     questions: String!
     #questions should be array
     #response should be array
-    responses: String!
+    responses: [PollResponse]
 }
 
 type PollQuestion {
@@ -28,12 +28,19 @@ type PollQuestion {
     options: [String]
 }
 
-input PollResponseInput {
-    title: String!
-    createdBy: String!
-    #response should be array
-    responses: String!
+type PollResponse {
+    name: String
+    email: String
+    responses: [String]
 }
+
+
+#input PollResponseInput {
+ #   name: String!
+  #  email: String!
+    #response should be array
+   # responses: String!
+#}
 
 input RegisterInput {
     password: String!
@@ -64,8 +71,8 @@ type Mutation {
     register(registerInput: RegisterInput): User!
     login(loginInput: LoginInput): User!
     createPoll(createPollInput: CreatePollInput): Poll!
-    #createPollResponse(pollResponseInput: createPollResponseInput): Poll!
-    createPollResponse(pollResponseInput: PollResponseInput): Poll!
+   # createPollResponse(pollResponseInput: PollResponseInput): Poll!
+    createPollResponse(id:String, name: String, email:String, responses: [String]): PollResponse
     deletePoll(id:String!): Poll
     deletePollResponse(id:String!): Poll
 }

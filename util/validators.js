@@ -22,7 +22,7 @@ module.exports.validateRegisterInput = (
 module.exports.validateLoginInput = (email, password) => {
     const errors = {};
     if (email.trim() === '') {
-        errors.email = "Username must not be empty";
+        errors.email = "Email must not be empty";
     }
     if (password.trim() === '') {
         errors.password = "Password must not be empty";
@@ -62,26 +62,20 @@ module.exports.validatePollCreation = (title, questions) => {
     };
 };
 
-module.exports.validatePollResponse = (title, responses) => {
+
+
+module.exports.validatePollResponse = (name, email, responses) => {
     const errors = {};
-    if(title.trim() == ''){
-        errrors.title = "Response title must not be empty";
+    //could change this functionality later on, for anonymous responses.
+    if(name.trim() == ''){
+        errrors.name = "Name must not be empty";
     }
-    /*
-    for(var i = 0; i < responses.length; i++){
-        if(responses[i].name.trim() === ''){
-            errors.responses = "Response in not valid";
-        }
-        //validateEmail(responses.email[i]);
 
-        for(var q = 0; q < responses[i].response.length; q++){
-            if(responses[i].response[q].trim() === ''){
-                errors.responses = "Response is not valid";
-            }
-        }
-
+    const emailErrors = validateEmail(email);
+    if(emailErrors != ""){
+        errors.email = emailErrors;
     }
-    */
+
     return{
         errors,
         valid: Object.keys(errors).length < 1
@@ -90,11 +84,12 @@ module.exports.validatePollResponse = (title, responses) => {
 
 function validateEmail(email){
     if (email.trim() === '') {
-        errors.email = "Email must not be empty";
+        return "Email must not be empty";
     } else {
         const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
         if (!email.match(regEx)) {
-            errors.email = 'Email must be a valid email address';
-        }
+            return "Email must be valid";
+        }   
     }
+    return "";
 }

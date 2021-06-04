@@ -30,7 +30,8 @@ module.exports = {
                 //createdAt: new Date().toISOString(),
                 createdBy,
                 active,
-                questions
+                questions,
+                responses: []
             });
 
             const res = await newPoll.save();
@@ -48,30 +49,36 @@ module.exports = {
         
 
          
-        }, async createPollResponse(_,{pollResponseInput: {title, createdBy, responses}}){
-            
+        }, async createPollResponse(parent, {id, name, email, responses}){
+            console.log(parent);
+            /*
             const{errors, valid} = validatePollResponse(title, JSON.parse(responses));
             if(!valid) {
                 throw new UserInputError('Error', { errors });
             }
+                */
+            const{errors, valid} = validatePollResponse(name, email, JSON.parse(responses));
+            if(!valid){
+                throw new UserInputError('Error', {errors});
+            }
+          // responses = ["A", "B", "fuckyouplaygound"];
+           const newPollReponse = {name:name, email:email, responses:responses}
+           Poll.findOneAndUpdate(
+                {_id: new mongodb.ObjectID(id)},
+                {$push: {responses: newPollReponse}},
+                function(error, success){
+                    if(error){
+                        console.log(error);
+                    }else{
+                        console.log(success);
+                    }
+                }
+            );
+            
 
-            console.log(title);
-            console.log(createdBy);
-            console.log(responses);
-            const newPollReponse = new pollResponse({
-                title,
-                createdBy, 
-                responses
-            });
+            return newPollReponse;
 
-            const res = await newPollReponse.save();
-            console.log(res);
 
-            return{
-                id: res.id,
-                ...res._doc
-
-            };
         }, async deletePollResponse(_, {id}){
             //dont need to set to value res
             const res = await PollResponse.deleteOne({
