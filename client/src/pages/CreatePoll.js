@@ -84,9 +84,7 @@ function CreatePoll(props) {
                     <Card.Group itemsPerRow={1}>
                         
                         <Card fluid color='green'>
-                            <Header  as="h3" style={{padding: "20px 20px 0px 20px", marginBottom: "0px"}}>
-                                Poll Title
-                            </Header>
+                            
                             <Form  style={{margin: "0px 20px"}}>
                                 {titleInput}
                                 {/*<TextArea id="pollTitle" placeholder='Write title here...' style={{margin: "20px 20px 0px 20px", marginLeft: "0px", height: "50px"}} />*/}

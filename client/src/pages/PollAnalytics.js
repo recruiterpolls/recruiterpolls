@@ -2,9 +2,13 @@ import faker from 'faker'
 import _ from 'lodash'
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Grid, Header, Button, Dropdown, Card, Transition } from 'semantic-ui-react';
+import { Grid, Header, Radio, Button, Dropdown, Card, Transition } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import "../App.css";
+import Chart from 'chart.js/auto';
+import QuestionAnalyticsChart from '../components/QuestionAnalyticsChart';
+
+
 
 function PollAnalytics() {
     const pathname = window.location.pathname;
@@ -22,6 +26,8 @@ function PollAnalytics() {
     }
     const questionsArray = JSON.parse(data.poll.questions)
     console.log(questionsArray);
+
+    
     return(
         <>
             <Grid>
@@ -73,15 +79,50 @@ function PollAnalytics() {
                         <Card fluid color='green'>
                             <Grid>
                                 <Grid.Row>
-                                    <Grid.Column width={16}>
-                                    <p>TITLE: {question.title}</p>
-                                    <p>DESCRIPTION: {question.description}</p>
+                                    <Grid.Column width={6}>
+                                        <div className="demowrapper">
+                                            <div>
+                                                <QuestionAnalyticsChart question={question} index={index}></QuestionAnalyticsChart>
+                                            </div>
+                                        </div>
+                                    </Grid.Column>
+                                    <Grid.Column width={10} style={{padding: "20px"}}>
+                                    <div>
+                                        <Header sub>Title</Header>
+                                        <Header as="h2" style={{margin: "0px", padding: "0px 0px 5px 0px"}}>{question.title} </Header>
+                                    </div>
+                                    <div>
+                                        <Header sub>Description</Header>
+                                        <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px"}}>{question.description}</Header>
+                                    </div>
+                                    <div className="box">
+                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>Option 1 </Header>
+                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
+                                            {question.options[0]}
+                                        </Header>
+                                    </div>
 
+                                    <div className="box">
+                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>Option 2 </Header>
+                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
+                                            {question.options[1]}
+                                        </Header>
+                                    </div>
+
+                                    <div className="box">
+                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>Option 3 </Header>
+                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
+                                            {question.options[2]}
+                                        </Header>
+                                    </div>
+
+                                    <div className="box">
+                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>Option 4 </Header>
+                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
+                                            {question.options[3]}
+                                        </Header>
+                                    </div>
                                     
-                                    <p>OPTION 1: {question.options[0]}</p>
-                                    <p>OPTION 2: {question.options[1]}</p>
-                                    <p>OPTION 3: {question.options[2]}</p>
-                                    <p>OPTION 4 :{question.options[3]}</p>
 
                                     </Grid.Column>
                                 </Grid.Row>

@@ -124,3 +124,12 @@
   margin: auto auto !important;
   align-items: center;
 }
+
+.demowrapper {
+  padding: 10px ;
+  background: white !important;
+  box-sizing: border-box !important;
+  resize: horizontal !important;
+  max-width: 100% !important;
+  height: 100% !important;
+}
