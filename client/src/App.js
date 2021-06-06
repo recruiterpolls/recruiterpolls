@@ -11,6 +11,8 @@ import PollAnalytics from './pages/PollAnalytics';
 import MyPolls from './pages/MyPolls';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ResponsesAnalytics from './pages/ResponsesAnalytics';
+import Poll from './pages/Poll';
 import { QuestionProvider } from './components/QuestionContext';
 import { AuthProvider } from './context/auth';
 
@@ -25,8 +27,10 @@ function App() {
           <Navbar />
           <Container className="innerContainer">
             <Route exact path='/' component={MyPolls}></Route>
+            <Route exact path='/:id' component={Poll}></Route>
             <Route exact path='/createpoll' component={CreatePoll}></Route>
             <Route exact path='/analytics/:id' component={PollAnalytics}></Route>
+            <Route exact path='/responses/:id' component={ResponsesAnalytics}></Route>
             <Route exact path='/login' component={LoginPage}></Route>
             <Route exact path='/register' component={RegisterPage}></Route>
           </Container>

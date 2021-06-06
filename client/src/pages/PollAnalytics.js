@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import "../App.css";
 import Chart from 'chart.js/auto';
 import QuestionAnalyticsChart from '../components/QuestionAnalyticsChart';
-
+import { Link } from 'react-router-dom';
 
 
 function PollAnalytics() {
@@ -35,17 +35,17 @@ function PollAnalytics() {
                     <Grid.Column width={16}>
                         <div className="box" width="100% !important">
                             <div>
-                                <Header as='h1' className="input">
+                                <Header as='h1' className="input" >
                                 Poll Analytics
                                 </Header>
                             </div>
                             <div>
-                                <Header as='h2' style={{margin: "0px 10px 0px 30px"}} >
+                                <Header as='h2' style={{margin: "0px 10px 0px 30px"}} as={Link} to={"/analytics/" + result}>
                                 Poll
                                 </Header>
                             </div>
                             <div>
-                                <Header as='h2'style={{margin: "0px 10px"}}>
+                                <Header as='h2'style={{margin: "0px 10px"}} as={Link} to={"/responses/" + result} >
                                 Responses
                                 </Header>
                             </div>
@@ -85,7 +85,7 @@ function PollAnalytics() {
                                                 <p style={{padding: "6px 6px 0px 6px", margin: "0px"}}>Question {index + 1}</p>
                                             </div>
                                             <div  style={{padding: "6px 6px 0px 6px", margin: "0px"}}>
-                                                <Button icon >
+                                                <Button icon size="mini">
                                                     <Icon name='edit' />
                                                 </Button>
                                             </div>
