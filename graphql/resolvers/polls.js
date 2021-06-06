@@ -24,14 +24,16 @@ module.exports = {
                 throw new UserInputError('Error', { errors });
             }
 
+           //responses = ["A", "B", "fuckyouplaygound"];
+
             const newPoll = new Poll({
                 title,
                 description,
-                //createdAt: new Date().toISOString(),
+                createdAt: new Date().toISOString(),
                 createdBy,
                 active,
                 questions,
-                responses: []
+                //responses: []
             });
 
             const res = await newPoll.save();
@@ -61,7 +63,7 @@ module.exports = {
             if(!valid){
                 throw new UserInputError('Error', {errors});
             }
-          // responses = ["A", "B", "fuckyouplaygound"];
+        responses = ["A", "B", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."];
            const newPollReponse = {name:name, email:email, responses:responses}
            Poll.findOneAndUpdate(
                 {_id: new mongodb.ObjectID(id)},
@@ -78,16 +80,25 @@ module.exports = {
 
             return newPollReponse;
 
-
+        
         }, async deletePollResponse(_, {id}){
             //dont need to set to value res
             const res = await PollResponse.deleteOne({
                 _id: new mongodb.ObjectID(id)
             });
-            console.log(id)
+            console.log(id);
+        
+       // }//, async getAllPollResponses(_, {id}){
+           // const res = await PollResponse
+        }, async getPollByID(_, {id}){
+            const res = await Poll.findOne({_id: new mongodb.ObjectID(id)});
+
+            return{
+                id: res.id,
+                ...res._doc
+            };
         }
         
-        //, async createPollQuestions(_,{pollQuestionInput})
       
 
     },
@@ -96,3 +107,50 @@ module.exports = {
         poll: (_,{id}) => Poll.findOne({_id: new mongodb.ObjectID(id)})
     },
  };
+
+
+
+
+
+ /*
+mutation {
+  createPollResponse(
+ 			id:"60b801ea6097ac34c01f25d7"
+      name: "test response",
+      email: "clout.chaser@gmail.com",
+      "\"responses: \"{\"[\"a\", \"b\", \"C\"]\"}\"\""
+      
+  ) {
+    name
+   	email
+    responses
+  }
+}
+
+
+mutation {
+  getPollByID(
+    
+     id: "60b801ea6097ac34c01f25d7"
+    
+  ) {
+		id
+    title
+    description
+    createdBy
+    active
+    questions
+    responses{
+      name
+      email
+      responses
+    }
+    
+  }
+}
+
+
+
+
+
+ */

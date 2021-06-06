@@ -13,15 +13,14 @@ const {SECRET} = require('../../privateVariables');
 
 const saltRounds = 10;
 
-const getToken = ({ id, username, email }) =>
+const getToken = ({ id, email }) =>
   jwt.sign(
     {
       id,
-      username,
       email
     },
     SECRET,
-    { expiresIn: '1d' }
+    { expiresIn: '6h' }
   );
 
 

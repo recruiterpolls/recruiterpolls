@@ -12,11 +12,13 @@ import MyPolls from './pages/MyPolls';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import { QuestionProvider } from './components/QuestionContext';
+import { AuthProvider } from './context/auth';
 
 
 
 function App() {
   return (
+    <AuthProvider>
     <QuestionProvider>
       <Router>
         <Container>
@@ -31,6 +33,7 @@ function App() {
         </Container>
       </Router>
     </QuestionProvider>
+    </AuthProvider>
   );
 }
 

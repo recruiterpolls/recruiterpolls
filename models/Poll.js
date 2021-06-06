@@ -11,6 +11,7 @@ const pollSchema = new Schema({
     title: String,
     description: String,
     createdBy: String,
+    createdAt: String,
     active:Boolean,
     questions: String,
     responses: Array
