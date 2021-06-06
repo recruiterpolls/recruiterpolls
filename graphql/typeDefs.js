@@ -12,11 +12,12 @@ type Poll {
     id: ID!
     title: String!
     description: String!
-    createdBy: User
+    createdBy: String                         #createdBy: User
     active: Boolean!
     createdAt: String!
     questions: String!                  #questions should be array
     responses: [PollResponse]
+    email: String!
 }
 
 type PollQuestion {
@@ -51,6 +52,7 @@ input CreatePollInput {
     active:Boolean
     questions: String
     createdAT: String
+    email: String!
 
 }
 
@@ -67,5 +69,6 @@ type Mutation {
     deletePoll(id:String!): Poll
     deletePollResponse(id:String!): Poll
     getPollByID(id:String!): Poll
+    getPollByUser(email: String!): [Poll]
 }
 `

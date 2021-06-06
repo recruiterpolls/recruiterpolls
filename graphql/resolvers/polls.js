@@ -1,6 +1,6 @@
 const mongodb = require('mongodb');
 const Poll = require('../../models/Poll');
-const pollResponse = require('../../models/PollResponse');
+//const pollResponse = require('../../models/PollResponse');
 const { validatePollCreation, validatePollResponse } = require('../../util/validators');
 const {
     UserInputError, // Throw an error if empty fields.
@@ -8,6 +8,8 @@ const {
     ValidationError
   } = require('apollo-server');
 const PollResponse = require('../../models/PollResponse');
+const users = require('./users');
+const User = require('../../models/User');
 ;
 
 
@@ -16,7 +18,7 @@ module.exports = {
     Mutation: {
         //async register(_, {registerInput : {username, email, password, confirmPassword}}) {
             //                           "title","desc stuf", "createdBy", True, "[{question1object}, {question2object}, {question3object}]"
-        async createPoll(_, {createPollInput: {title, description, createdBy, active, questions}}){
+        async createPoll(_, {createPollInput: {title, description, createdBy, active, questions, email}}){
          
             const{errors, valid} = validatePollCreation(title, JSON.parse(questions));
             
@@ -33,6 +35,7 @@ module.exports = {
                 createdBy,
                 active,
                 questions,
+                email
                 //responses: []
             });
 
@@ -97,6 +100,18 @@ module.exports = {
                 id: res.id,
                 ...res._doc
             };
+        }, async getPollByUser(_, {email}){
+            const res = await Poll.find({email});
+            console.log(res);
+            
+            //var resultArray = [];
+
+            //for(var i = 0; i < res.length; i++){
+
+            //}
+        
+            return res;
+            
         }
         
       
