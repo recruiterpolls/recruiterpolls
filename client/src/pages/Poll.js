@@ -1,25 +1,57 @@
 import faker from 'faker'
 import _, { trim } from 'lodash'
 import React, { useState, useContext } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { Grid, Header, Radio, Button, Dropdown, Card, Transition, Icon, Checkbox } from 'semantic-ui-react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { Grid, Header, Radio, Button, Dropdown, Card, Transition, Icon, Checkbox, Input, Form } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import "../App.css";
 import Chart from 'chart.js/auto';
 import QuestionAnalyticsChart from '../components/QuestionAnalyticsChart';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 function PollAnalytics() {
+    const history = useHistory();
     const pathname = window.location.pathname;
     var result = /[^/]*$/.exec(pathname)[0];
-    const responses = [];
-    console.log(result);
+    var [responses, setResponses] = useState([]);
+    var [firstName, setFirstName] = useState("");
+    var [lastName, setLastName] = useState("");
+    var [email, setEmail] = useState("");
+
     const { loading, error, data } = useQuery(GET_POLL, {
         variables: {
             id: result
         }
     });
+    var errorCount = 0;
+    const [createPollClicked] = useMutation(CREATE_POLL_RESPONSE, {
+        variables: {
+            id: result,
+            name: firstName + lastName,
+            email: email,
+            responses: responses
+        },
+        onCompleted(){
+            console.log(responses);
+        },
+        onError(error) {
+
+            // Handles bug where first button click results in error (regardless of anything else)
+            if (errorCount == 0) {
+                try {
+                    createPollClicked();
+                    errorCount = 1;
+                    return error;
+                } catch (error) {
+                    return error;
+                }
+            }
+            
+            return error;
+        }
+    });
+    console.log(errorCount);
     var [checkedArray, setCheckedArray] = useState([]);
     for (var i =0; i < 100; i++) {
         checkedArray.push([false,false,false,false,false,false,false,false,false,false,false,false,false,false]);
@@ -47,7 +79,9 @@ function PollAnalytics() {
             tempStr = tempStr.slice(0, -2);
             tempResponses.push(tempStr);
         }
-        console.log(tempResponses);
+        responses = JSON.parse(JSON.stringify(tempResponses));;
+        setResponses(JSON.stringify(tempResponses));
+        createPollClicked();
     }
     const handleChange = (e, { value }) => this.setState({ value })
     /*const handleRadioClick = (e, index) => {
@@ -75,7 +109,6 @@ function PollAnalytics() {
         }
         
     }*/
-
     
     const RadioInput = ({label, value, checked, setter}) => {
         return (
@@ -89,9 +122,6 @@ function PollAnalytics() {
     
     return(
         <>
-
-            
-           
             <Grid>
                 <Grid.Row >
                     <Grid.Column width={16} style={{maxWidth: "600px", margin: "0 auto"}}>
@@ -109,6 +139,44 @@ function PollAnalytics() {
                     
                     <Grid.Column width={16} style={{maxWidth:"700px",margin:"0 auto"}}>
                     <Card.Group itemsPerRow={1}>
+                    <Card fluid color='blue'>
+                        <Grid stackable>
+                            <Grid.Row style={{paddingTop: "0px", padding: "12px"}}>
+                                <Grid.Column width={16} style={{paddingTop: "0px"}}>
+                                    <div>
+                                        <Header as="h2" style={{margin: "0px", padding: "10px 0px 5px 0px"}}>Welcome to RecruiterPolls!</Header>
+                                    </div>
+                                    <div>
+                                        <Header as="h4" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"400px", textAlign: "justify"}}>RecruiterPolls keeps all personal information private and secure. Your information below allows recruiters to contact you for further steps in the process.</Header>
+                                    </div>
+                                    <div style={{paddingTop: "10px", paddingBottom:"10px"}}>
+                                        <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"500px", textAlign: "justify"}}>First Name</Header>
+                                        <Form>
+                                            <Form.Field style={{width: "300px"}}>
+                                                <input id="pollNameFirst" onChange={(e) => setFirstName(e.value)}></input>
+                                            </Form.Field>
+                                        </Form>
+                                    </div>
+                                    <div style={{paddingBottom:"10px"}}>
+                                        <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"500px", textAlign: "justify"}}>Last Name</Header>
+                                        <Form>
+                                            <Form.Field style={{width: "300px"}}>
+                                                <input id="pollNameLast" onChange={(e) => setLastName(e.value)}></input>
+                                            </Form.Field>
+                                        </Form>
+                                    </div>
+                                    <div style={{paddingBottom:"10px"}}>
+                                        <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"500px", textAlign: "justify"}}>Email Address</Header>
+                                        <Form>
+                                            <Form.Field style={{width: "300px"}}>
+                                                <input id="pollEmail" onChange={(e) => setEmail(e.value)}></input>
+                                            </Form.Field>
+                                        </Form>
+                                    </div>
+                                </Grid.Column>
+                            </ Grid.Row>
+                        </Grid>
+                    </Card>
                     { questionsArray.map( (question, questionIndex) => (
                         <Card fluid color='blue'>
                             <Grid stackable>
@@ -177,7 +245,19 @@ function PollAnalytics() {
     );
 }
 
-
+const CREATE_POLL_RESPONSE = gql`
+mutation createPollResponse($id: String $name: String $email: String $responses: String) {
+  createPollResponse(
+    id: $id
+    name: $name
+    email: $email
+    responses: $responses
+  ) {
+    name
+    email
+  }
+}    
+`
 
 const GET_POLL = gql`
 query poll($id: String!){
