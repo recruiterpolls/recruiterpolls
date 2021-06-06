@@ -53,6 +53,7 @@ module.exports = {
          
         }, async createPollResponse(parent, {id, name, email, responses}){
             console.log(parent);
+            console.log(responses);
             /*
             const{errors, valid} = validatePollResponse(title, JSON.parse(responses));
             if(!valid) {
@@ -63,9 +64,13 @@ module.exports = {
             if(!valid){
                 throw new UserInputError('Error', {errors});
             }
-        responses = ["A", "B", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."];
-           const newPollReponse = {name:name, email:email, responses:responses}
-           Poll.findOneAndUpdate(
+            //responses = ["A", "B", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."];
+            console.log(responses);
+            responses = JSON.parse(responses);
+            console.log(JSON.stringify(responses));
+            console.log("CREATING RESPONSE HERE");
+            const newPollReponse = {name:name, email:email, responses:responses}
+            Poll.findOneAndUpdate(
                 {_id: new mongodb.ObjectID(id)},
                 {$push: {responses: newPollReponse}},
                 function(error, success){

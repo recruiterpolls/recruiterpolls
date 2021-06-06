@@ -39,7 +39,7 @@ function PollAnalytics() {
                     <Grid.Column width={16}>
                         <div className="box" width="100% !important">
                             <div>
-                                <Header as='h1' className="input" >
+                                <Header as='h1' className="input">
                                 Poll Analytics
                                 </Header>
                             </div>
@@ -56,7 +56,7 @@ function PollAnalytics() {
                             <Button className="closePollButton">Close Poll</Button>
                         </div>
                     </Grid.Column>
-                    
+
                 </Grid.Row>
             </Grid>
             
@@ -145,6 +145,8 @@ function PollAnalytics() {
         </>
     );
 }
+
+
 
 const GET_POLL= gql`
 query poll($id: String!){

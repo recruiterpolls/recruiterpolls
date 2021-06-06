@@ -63,7 +63,7 @@ type Mutation {
     register(registerInput: RegisterInput): User!
     login(loginInput: LoginInput): User!
     createPoll(createPollInput: CreatePollInput): Poll!
-    createPollResponse(id:String, name: String, email:String, responses: [String]): PollResponse
+    createPollResponse(id:String, name: String, email:String, responses: String): PollResponse
     deletePoll(id:String!): Poll
     deletePollResponse(id:String!): Poll
     getPollByID(id:String!): Poll
