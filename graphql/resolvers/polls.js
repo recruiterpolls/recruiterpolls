@@ -109,18 +109,10 @@ module.exports = {
             const res = await Poll.find({email});
             console.log(res);
             
-            //var resultArray = [];
-
-            //for(var i = 0; i < res.length; i++){
-
-            //}
-        
             return res;
             
         }
         
-      
-
     },
 
     Query: {

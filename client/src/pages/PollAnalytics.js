@@ -8,9 +8,11 @@ import "../App.css";
 import Chart from 'chart.js/auto';
 import QuestionAnalyticsChart from '../components/QuestionAnalyticsChart';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/auth';
 
 
 function PollAnalytics() {
+    const { user } = useContext(AuthContext);
     const pathname = window.location.pathname;
     var result = /[^/]*$/.exec(pathname)[0];
     console.log(result);
@@ -21,6 +23,7 @@ function PollAnalytics() {
     });
     
     console.log(data);
+    console.log(user);
     if (data == undefined) {
         return <></>
     }

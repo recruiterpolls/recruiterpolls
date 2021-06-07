@@ -74,6 +74,8 @@ module.exports = {
             if (!match) throw new AuthenticationError('Incorrect password');
 
             const token = getToken(user);
+
+            console.log(user);
             
             return {
                 id: user.id,
