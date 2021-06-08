@@ -45,7 +45,8 @@ function CreatePoll(props) {
                 description: description,
                 createdBy: "ASDF",
                 active: true,
-                questions: JSON.stringify(questions)
+                questions: JSON.stringify(questions),
+                email: "cooper@gmail.com"
             }
         },
         onCompleted(data) {
