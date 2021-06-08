@@ -54,7 +54,7 @@ module.exports = {
         
 
          
-        }, async createPollResponse(parent, {id, name, email, responses}){
+        }, async createPollResponse(parent, {id, name, email, responses}){ 
             console.log(parent);
             console.log(responses);
             /*
@@ -72,7 +72,9 @@ module.exports = {
             responses = JSON.parse(responses);
             console.log(JSON.stringify(responses));
             console.log("CREATING RESPONSE HERE");
-            const newPollReponse = {name:name, email:email, responses:responses}
+
+
+            const newPollReponse = {name:name, email:email, responses:responses, watchlisted:false, rejected:false}
             Poll.findOneAndUpdate(
                 {_id: new mongodb.ObjectID(id)},
                 {$push: {responses: newPollReponse}},
