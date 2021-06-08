@@ -39,7 +39,7 @@ function PollAnalytics() {
                         <div className="box" width="100% !important">
                             <div>
                                 <Header as='h1' className="input" >
-                                Poll Analytics
+                                Poll Overview
                                 </Header>
                             </div>
                             <div>

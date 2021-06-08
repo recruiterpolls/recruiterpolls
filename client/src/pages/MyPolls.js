@@ -3,13 +3,16 @@ import _ from 'lodash'
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { Grid, Header, Button, Dropdown, Card, Transition } from 'semantic-ui-react';
-
+import { Link } from 'react-router-dom';
 import "../App.css";
 import { buildQueryFromSelectionSet } from '@apollo/client/utilities';
 import PollCard from '../components/PollCard';
 import gql from 'graphql-tag';
+import { AuthContext } from '../context/auth';
 
 function MyPolls() {
+    const { user } = useContext(AuthContext);
+    console.log(user);
     const filterOptions = [
         { 
             key: 'ASDF',
@@ -54,7 +57,7 @@ function MyPolls() {
     if (loading) return null;
     console.log(data);
     const polls = data.getPollsByEmail;
-    
+
     return(
         <>
             <Grid>
@@ -82,7 +85,7 @@ function MyPolls() {
                     <Transition.Group duration={200}>
                         {
                             polls && polls.map((poll) => (
-                                <Grid.Column key={poll.id} style={{marginBottom: '20px'}}>
+                                <Grid.Column key={poll.id} style={{marginBottom: '20px'}} as={Link} to={'/analytics/'+ poll.id}>
                                     <PollCard poll={poll} />
                                 </Grid.Column>
                             ))
@@ -107,6 +110,7 @@ query getPollsByEmail($email: String!) {
         active
         questions
         email
+        id
     }
 }
 `
