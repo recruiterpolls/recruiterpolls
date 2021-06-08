@@ -7,6 +7,7 @@ import { Grid, Header, Button, Dropdown, Card, Transition } from 'semantic-ui-re
 import "../App.css";
 import { buildQueryFromSelectionSet } from '@apollo/client/utilities';
 import PollCard from '../components/PollCard';
+import gql from 'graphql-tag';
 
 function MyPolls() {
     const filterOptions = [
@@ -16,7 +17,7 @@ function MyPolls() {
             value: 'ASDF'
         }
     ]
-    const polls = [
+    /*const polls = [
         {
             id: "1",
             title: "Post one",
@@ -37,7 +38,22 @@ function MyPolls() {
             id: "5",
             title: "Post five",
         }
-    ]
+    ]*/
+    const { loading, error, data } = useQuery(GET_USER_POLLS, {
+        variables: {
+            email: "cooper@gmail.com"
+        },
+        onCompleted(data){
+            console.log(data);
+        },
+        onError(err) {
+            console.log(err);
+            return err;
+        }
+    });
+    if (loading) return null;
+    console.log(data);
+    const polls = data.getPollsByEmail;
     
     return(
         <>
@@ -81,6 +97,19 @@ function MyPolls() {
     );
 }
 
+const GET_USER_POLLS = gql`
+query getPollsByEmail($email: String!) {
+    getPollsByEmail(email: $email) {
+        title
+        description
+        createdAt
+        createdBy
+        active
+        questions
+        email
+    }
+}
+`
 
 
 export default MyPolls;

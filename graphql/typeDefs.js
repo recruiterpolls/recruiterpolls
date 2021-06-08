@@ -59,6 +59,7 @@ input CreatePollInput {
 type Query {
     user(id: ID!): User
     poll(id: String!): Poll
+    getPollsByEmail(email: String!): [Poll]
 }
 
 type Mutation {

@@ -111,12 +111,18 @@ module.exports = {
             
             return res;
             
-        }
+        } 
         
     },
 
     Query: {
         poll: (_,{id}) => Poll.findOne({_id: new mongodb.ObjectID(id)})
+        , 
+        async getPollsByEmail(_, {email}) {
+            const res = await Poll.find({email});
+            console.log(res);
+            return res;
+        }
     },
  };
 
