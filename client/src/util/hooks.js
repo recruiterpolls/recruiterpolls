@@ -18,3 +18,13 @@ export const useForm = (callback, initialState = {}) => {
     values
   };
 };
+
+
+/*
+    {
+        email:' '
+        password:' '
+        confrimPassword:' '
+    }
+
+*/

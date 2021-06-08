@@ -69,14 +69,15 @@ function LoginPage(props) {
                         label="Password"
                         placeholder="Password.."
                         name="password"
-                        type="password"
+                        type="text"
                         value={values.password}
                         error={errors.password ? true : false}
                         onChange={onChange}
                         />
                         </Form.Field>
                   
-            <Button color="blue" type = "submit" >Login</Button>
+            <Button color="blue" type = "submit" >
+              Login</Button>
             </Form>
             {Object.keys(errors).length > 0 && (
         <div className="ui error message">
