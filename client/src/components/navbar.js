@@ -1,6 +1,7 @@
-import React, { useState, Component } from 'react'
+import React, { useState, Component, useContext } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/auth';
 
 function Navbar(props) { 
     const state = { activeItem: 'polls' };
@@ -8,7 +9,7 @@ function Navbar(props) {
     const path = pathname === '/' ? 'polls' : pathname.substr(1);
     const [activeItem, setActiveItem] = useState(path);
     const handleItemClick = (e, { name }) => setActiveItem(name);
-    
+    const { user } = useContext(AuthContext);
 
     return (
       <div>
