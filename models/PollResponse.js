@@ -2,9 +2,13 @@ const { model, Schema } = require('mongoose');
 
 
 const pollResponseSchema = new Schema({
-    title: String,
-    createdBy: String,
-    responses: String
+    name: String,
+    email: String,
+    createdAt: String,
+    responses: Array,
+    rejected: Boolean,
+    watchlisted: Boolean
+    
 
 });
 
@@ -15,4 +19,4 @@ const pollResponseSchema = new Schema({
 
 
 
-module.exports = model('PollResonse', pollResponseSchema);
+module.exports = model('PollResponse', pollResponseSchema);

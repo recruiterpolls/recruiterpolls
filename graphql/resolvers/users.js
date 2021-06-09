@@ -82,6 +82,8 @@ module.exports = {
                 ...user._doc,
                 token
             };
+        }, async verifyEmail(_, {vericationInput: password, email, isVerified}){
+
         }
     },
     Query: {

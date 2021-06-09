@@ -74,10 +74,23 @@ module.exports = {
             console.log("CREATING RESPONSE HERE");
 
 
-            const newPollReponse = {name:name, email:email, responses:responses, watchlisted:false, rejected:false}
+           // const newPollReponse = {name:name, email:email, responses:responses, watchlisted:false, rejected:false}
+
+           const newPollResponse = new PollResponse({
+            name,
+            email,
+            createdAt: new Date().toISOString(),
+            responses,
+            rejected: false,
+            watchlisted: false
+            //responses: []
+        });
+
+        const res = await newPollResponse.save();
+
             Poll.findOneAndUpdate(
                 {_id: new mongodb.ObjectID(id)},
-                {$push: {responses: newPollReponse}},
+                {$push: {responses: newPollResponse}},
                 function(error, success){
                     if(error){
                         console.log(error);
@@ -88,7 +101,12 @@ module.exports = {
             );
             
 
-            return newPollReponse;
+            return{
+                id: res.id,
+                ...res._doc
+            };
+    
+            //return newPollReponse;
 
         
         }, async deletePollResponse(_, {id}){
@@ -113,7 +131,23 @@ module.exports = {
             
             return res;
             
-        } 
+       }, async setResponseWatchlisted(_, {id, setValue}){
+
+            PollResponse.findOneAndUpdate({_id: new mongodb.ObjectID(id)}, {$set:{watchlisted:true}}, {new: true}, (error,doc) => {
+                if(error) {
+                    console.log("something went wrong")
+                }
+                    console.log(doc)
+                    return doc;
+            });
+
+            
+                                                    //come back to setResponseRejected and setResponseWatchlisted                                                    
+            
+            //return getPollByUser(email);
+        }, async setResponseRejected(_, {id, email, rejected, setValue}){
+            rejected = setValue;
+        }//, async getUserByResponse
         
     },
 

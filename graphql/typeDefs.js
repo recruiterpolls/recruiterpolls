@@ -29,9 +29,14 @@ type PollQuestion {
 }
 
 type PollResponse {
+    id: ID!
     name: String
     email: String
+    createdAt: String
     responses: [String]
+    watchlisted: Boolean
+    rejected: Boolean
+
 }
 
 
@@ -43,6 +48,12 @@ input RegisterInput {
 input LoginInput {
     email: String!
     password: String!
+}
+
+input VericationInput{
+    email: String!
+    password: String!
+    isVerified:Boolean
 }
 
 input CreatePollInput {
@@ -71,5 +82,8 @@ type Mutation {
     deletePollResponse(id:String!): Poll
     getPollByID(id:String!): Poll
     getPollByUser(email: String!): [Poll]
+    setResponseWatchlisted(id:String!, setValue:Boolean): PollResponse
+    setResponseRejected(responses:[String]! rejected:Boolean!, setValue:Boolean): ID
+    verifyEmail(vericationInput:VericationInput): User!
 }
 `

@@ -11,7 +11,7 @@ import gql from 'graphql-tag';
 import { AuthContext } from '../context/auth';
 
 function MyPolls() {
-    const { user } = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
     console.log(user);
     const filterOptions = [
         { 
