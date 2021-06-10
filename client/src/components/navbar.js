@@ -9,9 +9,58 @@ function Navbar(props) {
     const path = pathname === '/' ? 'polls' : pathname.substr(1);
     const [activeItem, setActiveItem] = useState(path);
     const handleItemClick = (e, { name }) => setActiveItem(name);
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
-    return (
+    const menuBar = user ? (
+      <div>
+        <Menu pointing secondary>
+          <Menu.Item
+            name="polls"
+            onClick={handleItemClick}
+            as={Link}
+            to="/"
+            >
+             <span className={"navbarRecruiter"}>Recruiter</span><span className={"navbarPolls"}>Polls</span>
+            </Menu.Item>
+          <Menu.Item
+            name='polls'
+            active={activeItem === 'polls'}
+            onClick={handleItemClick}
+            className={"navbarText"}
+            as={Link}
+            to="/"
+          />
+          {/*<Menu.Item
+            name='analytics'
+            active={activeItem === 'analytics'}
+            onClick={handleItemClick}
+            className={"navbarText"}
+            as={Link}
+            to="/analytics"
+          >Analytics </Menu.Item>*/}
+          <Menu.Item
+            name='createpoll'
+            active={activeItem === 'createpoll'}
+            onClick={handleItemClick}
+            className={"navbarText"}
+            as={Link}
+            to="/createpoll"
+          >Create Poll</Menu.Item>
+          <Menu.Menu position='right'>
+            <Menu.Item
+            >
+              {"Hey " + user.email + " !"}
+            </Menu.Item>
+            <Menu.Item
+              name='logout'
+              onClick={logout}
+            />
+            </Menu.Menu>
+          
+        </Menu>
+      </div>
+
+    ) : (
       <div>
         <Menu pointing secondary>
           <Menu.Item
@@ -70,6 +119,7 @@ function Navbar(props) {
       </div>
     )
   
+    return menuBar;
 }
 
 export default Navbar;

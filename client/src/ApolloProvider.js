@@ -5,7 +5,12 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { setContext } from 'apollo-link-context';
+import { onError } from 'apollo-link-error';
 
+const errorLink = onError(({ graphQLErrors }) => {
+    if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message))
+  })
+  
 const httpLink = createHttpLink({
     uri: 'http://localhost:5000'
 });
@@ -20,7 +25,7 @@ const authLink = setContext(() => {
 })
 
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: authLink.concat(httpLink).concat(errorLink),
     cache: new InMemoryCache()
 });
 

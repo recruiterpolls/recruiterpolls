@@ -41,9 +41,9 @@ type PollResponse {
 
 
 input RegisterInput {
+    email: String!
     password: String!
     confirmPassword: String!
-    email: String!
 }
 input LoginInput {
     email: String!

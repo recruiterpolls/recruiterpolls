@@ -27,13 +27,7 @@ const getToken = ({ id, email }) =>
 module.exports = {
     Mutation: {
         async register(_, {registerInput : {email, password, confirmPassword}}) {
-            
-            // Generating hash for password 
-            /*var hash = bcrypt.genSalt(saltRounds, function(err, salt) {
-                bcrypt.hash(password, salt, function(err, hash) {
-                    return hash;
-                });
-            });*/
+
             const { errors, valid } = validateRegisterInput(email, password, confirmPassword);
             if (!valid) {
                 throw new UserInputError('Error', { errors });
@@ -60,7 +54,7 @@ module.exports = {
                 ...res._doc,
                 token
             };
-        }, async login(_, {loginInput : {email, password,}}) {
+        }, async login(_, {loginInput : {email, password}}) {
             const { errors, valid } = validateLoginInput(email, password);
             
             if (!valid) {

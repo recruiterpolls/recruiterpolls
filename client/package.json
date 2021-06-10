@@ -12,6 +12,7 @@
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.20",
+    "apollo-link-error": "^1.1.13",
     "apollo-link-http": "^1.5.17",
     "chart.js": "^3.3.2",
     "chartjs-plugin-datalabels": "^1.0.0",

@@ -17,11 +17,6 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
             value: '4'
         },
         { 
-            key: '2',
-            text: 'Single choice',
-            value: '5'
-        },
-        { 
             key: '3',
             text: 'Multiple choice',
             value: '6'

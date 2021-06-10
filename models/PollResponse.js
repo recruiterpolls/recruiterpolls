@@ -8,8 +8,6 @@ const pollResponseSchema = new Schema({
     responses: Array,
     rejected: Boolean,
     watchlisted: Boolean
-    
-
 });
 
 

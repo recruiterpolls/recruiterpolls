@@ -28,9 +28,9 @@ function PollAnalytics() {
     const [createPollClicked] = useMutation(CREATE_POLL_RESPONSE, {
         variables: {
             id: result,
-            name: firstName + lastName,
+            name: firstName + " " + lastName,
             email: email,
-            responses: responses
+            responses: JSON.stringify(responses)
         },
         onCompleted(){
             console.log(responses);
@@ -38,15 +38,7 @@ function PollAnalytics() {
         onError(error) {
 
             // Handles bug where first button click results in error (regardless of anything else)
-            if (errorCount == 0) {
-                try {
-                    createPollClicked();
-                    errorCount = 1;
-                    return error;
-                } catch (error) {
-                    return error;
-                }
-            }
+            console.log(JSON.stringify(error, null, 2));
             
             return error;
         }
@@ -83,7 +75,7 @@ function PollAnalytics() {
         setResponses(JSON.stringify(tempResponses));
         createPollClicked();
     }
-    const handleChange = (e, { value }) => this.setState({ value })
+    const handleChange = (e, { value }) => this.setState(value)
     /*const handleRadioClick = (e, index) => {
         console.log(e);
         console.log(index);
@@ -153,7 +145,7 @@ function PollAnalytics() {
                                         <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"500px", textAlign: "justify"}}>First Name</Header>
                                         <Form>
                                             <Form.Field style={{width: "300px"}}>
-                                                <input id="pollNameFirst" onChange={(e) => setFirstName(e.value)}></input>
+                                                <input id="pollNameFirst" onChange={(e) => setFirstName(e.target.value)}></input>
                                             </Form.Field>
                                         </Form>
                                     </div>
@@ -161,7 +153,7 @@ function PollAnalytics() {
                                         <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"500px", textAlign: "justify"}}>Last Name</Header>
                                         <Form>
                                             <Form.Field style={{width: "300px"}}>
-                                                <input id="pollNameLast" onChange={(e) => setLastName(e.value)}></input>
+                                                <input id="pollNameLast" onChange={(e) => setLastName(e.target.value)}></input>
                                             </Form.Field>
                                         </Form>
                                     </div>
@@ -169,7 +161,7 @@ function PollAnalytics() {
                                         <Header as="h3" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"500px", textAlign: "justify"}}>Email Address</Header>
                                         <Form>
                                             <Form.Field style={{width: "300px"}}>
-                                                <input id="pollEmail" onChange={(e) => setEmail(e.value)}></input>
+                                                <input id="pollEmail" onChange={(e) => setEmail(e.target.value)}></input>
                                             </Form.Field>
                                         </Form>
                                     </div>

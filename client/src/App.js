@@ -15,7 +15,7 @@ import ResponsesAnalytics from './pages/ResponsesAnalytics';
 import Poll from './pages/Poll';
 import { QuestionProvider } from './components/QuestionContext';
 import { AuthProvider } from './context/auth';
-
+import AuthRoute from './util/AuthRoute';
 
 
 function App() {

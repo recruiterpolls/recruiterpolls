@@ -10,6 +10,7 @@ import CreateQuestionList from '../components/CreateQuestionList';
 import { QuestionContext } from '../components/QuestionContext';
 import 'semantic-ui-css/semantic.min.css';
 import { useHistory } from "react-router-dom";
+import { AuthContext } from '../context/auth';
 
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
@@ -26,6 +27,7 @@ function CreatePoll(props) {
     //const [questions, setQuestions] = useContext(QuestionContext);
     
     const [questions, setQuestions] = useContext(QuestionContext);
+    const { user } = useContext(AuthContext);
     const [pollData] = useState("");
     const addQuestion = (e) => {
         e.preventDefault();
@@ -38,15 +40,16 @@ function CreatePoll(props) {
         }])
     }
     console.log(questions);
+    console.log(user);
     const [createPollClicked] = useMutation(CREATE_POLL_MUTATION, {
         variables: {
             createPollInput: {
                 title: title,
                 description: description,
-                createdBy: "ASDF",
+                createdBy: user ? user.email : "" ,
                 active: true,
                 questions: JSON.stringify(questions),
-                email: "cooper@gmail.com"
+                email: user ? user.email  : ""
             }
         },
         onCompleted(data) {
@@ -85,7 +88,9 @@ function CreatePoll(props) {
                     <Card.Group itemsPerRow={1}>
                         
                         <Card fluid color='green'>
-                            
+                            <Header as="h3" style={{padding: "20px 20px 0px 20px", marginBottom: "0px"}}>
+                                Poll Title
+                            </Header>
                             <Form  style={{margin: "0px 20px"}}>
                                 {titleInput}
                                 {/*<TextArea id="pollTitle" placeholder='Write title here...' style={{margin: "20px 20px 0px 20px", marginLeft: "0px", height: "50px"}} />*/}

@@ -21,21 +21,18 @@ function RegisterPage(props) {
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(
-      _,
-      {
-        data: { register: userData }
-      }
-    ) {
+    update( proxy, { data: { register: userData }}) 
+    {
+      console.log("BEFORE LOGIN");
       context.login(userData);
+      console.log("AFTER LOGIN");
       props.history.push('/');
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      console.log(JSON.stringify(err, null, 2));
+      //setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: {
-        registerInput:values
-    }
+    variables: values
   });
 
   function registerUser() {
@@ -90,7 +87,7 @@ function RegisterPage(props) {
                 />
                 </Form.Field>
             
-            <Button color="blue" type = "submit">
+            <Button color="blue" type="submit">
                 Register
             </Button>
             </Form>
@@ -130,15 +127,22 @@ mutation createPoll($createPollInput: CreatePollInput){
 
 
 const REGISTER_USER = gql`
-  mutation register($registerInput:RegisterInput) {
+  mutation register(
+    $email: String!
+    $password: String!
+    $confirmPassword: String!) {
     register(
-        registerInput:$registerInput
+      registerInput: {
+                email: $email
+                password: $password
+                confirmPassword: $confirmPassword
+            }
     ) {
         id
         token
-    	email
-    	createdAt
-    	password
+    	  email
+    	  createdAt
+    	  password
     }
   }
 `;

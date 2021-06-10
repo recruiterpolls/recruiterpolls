@@ -28,8 +28,11 @@ function PollAnalytics() {
     const questionsArray = JSON.parse(data.poll.questions)
     console.log(questionsArray);
 
-    const responsesArray = data.poll.responses
+    var responsesArray = data.poll.responses;
+    
     console.log(responsesArray);
+    
+    
 
     
     return(
@@ -66,7 +69,7 @@ function PollAnalytics() {
                 <Grid.Row >
                     <Grid.Column width={16}>
                         <Header as='h1' style={{textAlign: "center", marginTop: "10px"}}>
-                            312 Responses
+                            {responsesArray.length} Responses
                         </Header>
                     </Grid.Column>
                 </Grid.Row>
@@ -79,7 +82,8 @@ function PollAnalytics() {
                     </Grid.Column>
                     <Grid.Column width={12}>
                         { responsesArray.map( (response, index) => (
-                        <Card fluid color='blue'>
+                            
+                        <Card fluid color='blue' style={{paddingBottom: "10px"}}>
                             <Grid>
                                 <Grid.Column width={16}>
                                 <Grid.Row style={{paddingBottom: "0px"}}>
@@ -109,7 +113,7 @@ function PollAnalytics() {
                                 <Grid.Column width={16} style={{maxWidth:"500px", margin: "0 auto"}}>
                                     { questionsArray.map( (question, index) => (
                                         <>
-                                            <Header sub style={{paddingLeft: "12px"}}>Question 1</Header>
+                                            <Header sub style={{paddingLeft: "12px"}}>Question {index + 1}</Header>
                                             <Header as='h3' style={{paddingLeft: "12px", marginTop: "0px", marginBottom: "0px",lineHeight:"24px"}}>
                                                 {question.title}
                                             </Header>

@@ -11,34 +11,28 @@ import "../App.css";
 
 function LoginPage(props) {
     const context = useContext(AuthContext);
-  const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
 
-  const { onChange, onSubmit, values } = useForm(loginUserCallback, {
-    email: '',
-    password: ''
-  });
+    const { onChange, onSubmit, values } = useForm(loginUserCallback, {
+      email: '',
+      password: ''
+    });
 
-  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update(
-      _,
-      {
-        data: { login: userData }
-      }
-    ) {
-      context.login(userData);
-      props.history.push('/');
-    },
-    onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
-    },
-    variables:{
-        loginInput:values
+    const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+      update(proxy, {data: {login: userData}}){ //triggered if mutation successfully executed
+          context.login(userData);
+          props.history.push('/');
+      },
+      onError(err) {
+        //setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      },
+      variables: values 
+    });
+
+    function loginUserCallback() {
+      loginUser();
     }
-  });
 
-  function loginUserCallback() {
-    loginUser();
-  }
     return(
         <>
             <Grid>
@@ -48,7 +42,6 @@ function LoginPage(props) {
                             Login
                         </Header>
                     </Grid.Column>
-                    
                 </Grid.Row>
             </Grid>
             <hr></hr>
@@ -93,14 +86,17 @@ function LoginPage(props) {
 }
 
 const LOGIN_USER = gql`
-  mutation login($loginInput:LoginInput) {
+  mutation login($email:String! $password:String!) {
     login(
-        loginInput:$loginInput
+        loginInput: {
+          email: $email
+          password: $password
+        }
     ) {
-        id
+      id
     	token
     	email
-        createdAt
+      createdAt
     	password
     }
   }

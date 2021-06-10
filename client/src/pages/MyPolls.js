@@ -42,9 +42,10 @@ function MyPolls() {
             title: "Post five",
         }
     ]*/
+    
     const { loading, error, data } = useQuery(GET_USER_POLLS, {
         variables: {
-            email: "cooper@gmail.com"
+            email:  user ? user.email  : ""
         },
         onCompleted(data){
             console.log(data);
@@ -57,6 +58,7 @@ function MyPolls() {
     if (loading) return null;
     console.log(data);
     const polls = data.getPollsByEmail;
+
 
     return(
         <>

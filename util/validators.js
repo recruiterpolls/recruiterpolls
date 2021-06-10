@@ -5,7 +5,10 @@ module.exports.validateRegisterInput = (
 ) => {
     const errors = {};
 
-    validateEmail(email);
+    const emailErrors = validateEmail(email);
+    if(emailErrors != ""){
+        errors.email = emailErrors;
+    }
 
     if (password === '') {
         errors.password = 'Password must not be empty';

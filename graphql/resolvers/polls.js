@@ -10,7 +10,7 @@ const {
 const PollResponse = require('../../models/PollResponse');
 const users = require('./users');
 const User = require('../../models/User');
-;
+
 
 
 module.exports = {
@@ -54,39 +54,42 @@ module.exports = {
         
 
          
-        }, async createPollResponse(parent, {id, name, email, responses}){ 
-            console.log(parent);
-            console.log(responses);
+        }, async createPollResponse(_, {id, name, email, responses}){ 
+            
             /*
             const{errors, valid} = validatePollResponse(title, JSON.parse(responses));
             if(!valid) {
                 throw new UserInputError('Error', { errors });
             }
                 */
+            console.log("IN");
+            console.log(name);
+            console.log(email);
             const{errors, valid} = validatePollResponse(name, email, JSON.parse(responses));
+            
             if(!valid){
                 throw new UserInputError('Error', {errors});
             }
             //responses = ["A", "B", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."];
             console.log(responses);
             responses = JSON.parse(responses);
-            console.log(JSON.stringify(responses));
+            var responsesArray = JSON.parse(responses);
+            console.log(JSON.parse(responses));
             console.log("CREATING RESPONSE HERE");
 
 
            // const newPollReponse = {name:name, email:email, responses:responses, watchlisted:false, rejected:false}
 
            const newPollResponse = new PollResponse({
-            name,
-            email,
-            createdAt: new Date().toISOString(),
-            responses,
-            rejected: false,
-            watchlisted: false
-            //responses: []
-        });
-
-        const res = await newPollResponse.save();
+                name,
+                email,
+                createdAt: new Date().toISOString(),
+                responses: JSON.parse(responses),
+                rejected: false,
+                watchlisted: false
+            });
+            console.log(responses);
+            const res = await newPollResponse.save();
 
             Poll.findOneAndUpdate(
                 {_id: new mongodb.ObjectID(id)},
