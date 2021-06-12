@@ -15,7 +15,7 @@ type Poll {
     createdBy: String                         #createdBy: User
     active: Boolean!
     createdAt: String!
-    questions: String!                  #questions should be array
+    questions: [PollQuestion]                  #questions should be array
     responses: [PollResponse]
     email: String!
 }

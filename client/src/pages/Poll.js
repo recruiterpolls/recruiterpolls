@@ -14,7 +14,7 @@ function PollAnalytics() {
     const history = useHistory();
     const pathname = window.location.pathname;
     var result = /[^/]*$/.exec(pathname)[0];
-    var [responses, setResponses] = useState([]);
+    var [responses, setResponses] = useState("");
     var [firstName, setFirstName] = useState("");
     var [lastName, setLastName] = useState("");
     var [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ function PollAnalytics() {
             id: result,
             name: firstName + " " + lastName,
             email: email,
-            responses: JSON.stringify(responses)
+            responses:responses//: JSON.stringify(responses)
         },
         onCompleted(){
             console.log(responses);
@@ -39,6 +39,8 @@ function PollAnalytics() {
 
             // Handles bug where first button click results in error (regardless of anything else)
             console.log(JSON.stringify(error, null, 2));
+
+
             
             return error;
         }
@@ -53,7 +55,7 @@ function PollAnalytics() {
     if (data == undefined) {
         return <></>
     }
-    const questionsArray = JSON.parse(data.poll.questions)
+    const questionsArray = data.poll.questions;
     console.log(questionsArray);
 
     const submitPollResponse = (e) => {
@@ -71,8 +73,13 @@ function PollAnalytics() {
             tempStr = tempStr.slice(0, -2);
             tempResponses.push(tempStr);
         }
-        responses = JSON.parse(JSON.stringify(tempResponses));;
-        setResponses(JSON.stringify(tempResponses));
+        console.log(tempResponses);
+        //responses = JSON.parse(JSON.stringify(tempResponses));
+        tempResponses = JSON.stringify(tempResponses);
+        console.log(tempResponses);
+        setResponses(tempResponses);
+        responses = tempResponses;
+        console.log(responses);
         createPollClicked();
     }
     const handleChange = (e, { value }) => this.setState(value)
@@ -256,9 +263,25 @@ query poll($id: String!){
     poll(id: $id) {
         title
     	description
-        questions
+        questions {
+            title,
+            description,
+            questionType,
+            required,
+            options
+            
+        }
     }
 }
 `
+
+/*
+title: String
+    description: String
+    questionType: String
+    required: Boolean
+    options: [String]
+*/
+
 
 export default PollAnalytics;

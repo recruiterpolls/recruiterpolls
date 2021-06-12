@@ -39,8 +39,7 @@ function CreatePoll(props) {
             options: ["", "", "", ""]
         }])
     }
-    console.log(questions);
-    console.log(user);
+    
     const [createPollClicked] = useMutation(CREATE_POLL_MUTATION, {
         variables: {
             createPollInput: {
@@ -54,10 +53,14 @@ function CreatePoll(props) {
         },
         onCompleted(data) {
             history.push('/analytics/' + data.createPoll.id);
-            console.log(data);
+            console.log(data.createPoll);
+            console.log(questions);
         },
         onError(error) {
-            console.log(error);
+            console.log(JSON.stringify(error, null, 2));
+            console.log(questions);
+            console.log(title);
+            console.log(description);
             return error;
         }
     });
@@ -149,7 +152,6 @@ mutation createPoll($createPollInput: CreatePollInput){
     description
     createdBy
     active
-    questions
   }
 }
 `

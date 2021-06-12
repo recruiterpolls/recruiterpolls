@@ -19,6 +19,9 @@ function PollAnalytics() {
     const { loading, error, data } = useQuery(GET_POLL, {
         variables: {
             id: result
+        },
+        onError(error){
+            console.log(JSON.stringify(error, null, 2));
         }
     });
     
@@ -27,7 +30,7 @@ function PollAnalytics() {
     if (data == undefined) {
         return <></>
     }
-    const questionsArray = JSON.parse(data.poll.questions)
+    const questionsArray = data.poll.questions;
     console.log(questionsArray);
 
     
@@ -169,9 +172,17 @@ query poll($id: String!){
     poll(id: $id) {
         title
     	description
-        questions
+        questions{
+            title,
+            description,
+            questionType,
+            required,
+            options
+        }
     }
 }
 `
+/*
 
+*/
 export default PollAnalytics;
