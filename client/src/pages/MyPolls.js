@@ -57,8 +57,8 @@ function MyPolls() {
     });
     if (loading) return null;
     console.log(data);
-    const polls = data.getPollsByEmail;
-
+ const polls = data.getPollsByEmail;
+   
 
     return(
         <>
@@ -110,7 +110,6 @@ query getPollsByEmail($email: String!) {
         createdAt
         createdBy
         active
-        questions
         email
         id
     }

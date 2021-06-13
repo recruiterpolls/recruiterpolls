@@ -25,7 +25,7 @@ function PollAnalytics() {
         return <></>
     }
     console.log(data);
-    const questionsArray = JSON.parse(data.poll.questions)
+    const questionsArray = data.poll.questions;
     console.log(questionsArray);
 
     var responsesArray = data.poll.responses;
@@ -155,7 +155,13 @@ function PollAnalytics() {
 const GET_POLL= gql`
 query poll($id: String!){
     poll(id: $id) {
-        questions
+        questions{
+            title,
+            description,
+            questionType,
+            required,
+            options
+        }
         responses {
             name
             email

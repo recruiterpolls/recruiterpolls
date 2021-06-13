@@ -30,7 +30,7 @@ function PollAnalytics() {
             id: result,
             name: firstName + " " + lastName,
             email: email,
-            responses:responses//: JSON.stringify(responses)
+            responses:JSON.stringify(responses)
         },
         onCompleted(){
             console.log(responses);
@@ -39,7 +39,7 @@ function PollAnalytics() {
 
             // Handles bug where first button click results in error (regardless of anything else)
             console.log(JSON.stringify(error, null, 2));
-
+            console.log(responses);
 
             
             return error;
