@@ -103,7 +103,7 @@ module.exports = {
             console.log(name);
             console.log(email);
             console.log(responses);
-            const{errors, valid} = validatePollResponse(name, email, JSON.parse(responses));
+            const{errors, valid} = validatePollResponse(name, email, responses);
             
             if(!valid){
                 console.log("user input error thrown");
@@ -111,8 +111,8 @@ module.exports = {
             }
             //responses = ["A", "B", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."];
             console.log(responses);
-            responses = JSON.parse(responses);
-           // var responsesArray = JSON.parse(responses);
+            //responses = JSON.parse(responses);
+            // var responsesArray = JSON.parse(responses);
             //console.log(JSON.parse(responses));
             console.log("CREATING RESPONSE HERE");
 
@@ -123,7 +123,7 @@ module.exports = {
                 name,
                 email,
                 createdAt: new Date().toISOString(),
-                responses:responses,//: JSON.parse(responses),
+                responses: [...responses],//: JSON.parse(responses),
                 rejected: false,
                 watchlisted: false
             });

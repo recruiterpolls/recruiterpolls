@@ -14,7 +14,7 @@ function PollAnalytics() {
     const history = useHistory();
     const pathname = window.location.pathname;
     var result = /[^/]*$/.exec(pathname)[0];
-    var [responses, setResponses] = useState("");
+    var [responses, setResponses] = useState([]);
     var [firstName, setFirstName] = useState("");
     var [lastName, setLastName] = useState("");
     var [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ function PollAnalytics() {
             id: result,
             name: firstName + " " + lastName,
             email: email,
-            responses:JSON.stringify(responses)
+            responses: [...responses]
         },
         onCompleted(){
             console.log(responses);
@@ -75,7 +75,7 @@ function PollAnalytics() {
         }
         console.log(tempResponses);
         //responses = JSON.parse(JSON.stringify(tempResponses));
-        tempResponses = JSON.stringify(tempResponses);
+        
         console.log(tempResponses);
         setResponses(tempResponses);
         responses = tempResponses;
@@ -245,7 +245,7 @@ function PollAnalytics() {
 }
 
 const CREATE_POLL_RESPONSE = gql`
-mutation createPollResponse($id: String $name: String $email: String $responses: String) {
+mutation createPollResponse($id: String $name: String $email: String $responses: [String]) {
   createPollResponse(
     id: $id
     name: $name
