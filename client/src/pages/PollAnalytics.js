@@ -119,35 +119,18 @@ function PollAnalytics() {
                                         <Header as="h4" style={{margin: "0px", padding: "0px 0px 5px 0px"}}>{question.description}</Header>
                                         <Header sub style={{margin: "10px 0px 0px 0px", padding: "0px 0px 5px 0px"}}>Options</Header>
                                     </div>
-                                    
-                                    <div className="box">
-                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>1 </Header>
-                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
-                                            {question.options[0]}
-                                        </Header>
-                                    </div>
+                                    { question.options.map( (option, index) => 
+                                        <>
+                                        <div className="box">
+                                            <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>{index + 1} </Header>
+                                            <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
+                                                {option}
+                                            </Header>
+                                        </div>
 
-                                    <div className="box">
-                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>2 </Header>
-                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
-                                            {question.options[1]}
-                                        </Header>
-                                    </div>
-
-                                    <div className="box">
-                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>3 </Header>
-                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
-                                            {question.options[2]}
-                                        </Header>
-                                    </div>
-
-                                    <div className="box">
-                                        <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>4 </Header>
-                                        <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
-                                            {question.options[3]}
-                                        </Header>
-                                    </div>
-                                    
+                                        
+                                        </>
+                                    )}
 
                                     </Grid.Column>
                                 </Grid.Row>

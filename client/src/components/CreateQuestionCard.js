@@ -104,6 +104,59 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
         setQuestions([...questions], questions);
     }; 
 
+    const deleteOption = e => {
+        const { value } = e.target;
+        console.log(e);
+        
+        var clickedID = e.target.getAttribute("ID")[e.target.getAttribute("ID").length-1];
+        
+        var optionsIndex = e.target.attributes[1].nodeValue;
+        //console.log(value);
+        console.log(clickedID);
+        console.log(optionsIndex);
+
+        for(var i = 0; i < questions.length; i++) {
+            if (i == clickedID) {
+                console.log("HERE");
+                console.log("i = " + i);
+                console.log("optionsIndex = " + optionsIndex);
+                var savedArray = questions[i]["options"];
+                savedArray.splice(optionsIndex,1);
+                questions[i]["options"] = savedArray;
+            }
+        }
+        
+        console.log(JSON.stringify(questions));
+        setQuestions([...questions]);
+    }
+
+    const addOption = e => {
+        const { value } = e.target;
+        console.log(e);
+        
+        var clickedID = e.target.getAttribute("ID")[e.target.getAttribute("ID").length-1];
+        
+        var optionsIndex = e.target.attributes[1].nodeValue;
+        //console.log(value);
+        console.log(clickedID);
+        console.log(optionsIndex);
+
+        for(var i = 0; i < questions.length; i++) {
+            if (i == clickedID) {
+                console.log("HERE");
+                console.log("i = " + i);
+                console.log("optionsIndex = " + optionsIndex);
+                var savedArray = questions[i]["options"];
+                savedArray.push("");
+                questions[i]["options"] = savedArray;
+            }
+        }
+        
+        console.log(JSON.stringify(questions));
+        setQuestions([...questions]);
+    }
+
+    console.log(questions);
     return (
         <>
         <Card fluid color='green'>
@@ -149,9 +202,10 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
             <Form  style={{margin: "0px 20px", width: "100%"}}>
                 
                 {
+                        
                         options.map((option, index) => (
                             <div className="box">
-                                <Radio
+                                <Checkbox
                                     name='radioGroup'
                                     value={id}
                                     style = {{marginRight: "10px"}}
@@ -161,15 +215,23 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
                                     onChange={handleOptionChange}
                                     name='options'
                                     placeholder="Write option here..."
-                                    defaultValue={option.trim() === '' ? '' : option}
+                                    value={option.trim() === '' ? '' : option}
                                     style = {{width: "80%", marginRight: "10px"}}
                                     data-index={index}
                                     data-ID={id}
                                 />
-                                <Button icon='delete' />
+                                <Button  data-ID={id} data-index={index} onClick={deleteOption} id={index} id={"optionsInputChange" + id}>             
+                                    Delete
+                                </Button>
                             </div>
                         ))
                 }
+
+                <div className="box" style={{padding: "10px 30px", width: "100%"}}>
+                    <Button size="small" data-ID={id} onClick={addOption} id={"optionsInputChange" + id}>             
+                        Add Option
+                    </Button>
+                </div>
                 
             </Form>
             </Grid.Column>
