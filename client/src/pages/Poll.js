@@ -30,7 +30,8 @@ function PollAnalytics() {
             id: result,
             name: firstName + " " + lastName,
             email: email,
-            responses: [...responses]
+            responses: [...responses],
+            checkedArray:checkedArray
         },
         onCompleted(){
             console.log(responses);
@@ -58,19 +59,25 @@ function PollAnalytics() {
     const questionsArray = data.poll.questions;
     console.log(questionsArray);
 
+
+
     const submitPollResponse = (e) => {
-        var tempResponses = []
+        var tempResponses = [];
+        var tempChecked = [];
         for (var i = 0; i < questionsArray.length; i++) {
             var tempStr = "";
+            var tempCheckedString = "";
             var options = document.getElementsByClassName("questionGroup" + i);
             for (var x = 0; x < options.length; x++) {
                 console.log(options[x]);
 
                 if (options[x].className.split(' ').includes("checked")) {
                     tempStr += options[x].getElementsByTagName("input")[0].getAttribute("value").trim() + ", ";
+                    tempCheckedString += x.toString() + ",";
                 }
             }
             tempStr = tempStr.slice(0, -2);
+            tempCheckedString = tempCheckedString.slice(0, -2);             //could slice off more characters than we think.
             tempResponses.push(tempStr);
         }
         console.log(tempResponses);
@@ -251,6 +258,7 @@ mutation createPollResponse($id: String $name: String $email: String $responses:
     name: $name
     email: $email
     responses: $responses
+    checkedArray: $checkedArray
   ) {
     name
     email
