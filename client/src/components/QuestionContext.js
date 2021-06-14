@@ -8,7 +8,7 @@ export const QuestionProvider = (props) => {
         {
             title: "",
             description: "",
-            questionType: "",
+            questionType: "Multiple choice",
             required: true,
             options: ["", "", "", ""],
             index: 0
