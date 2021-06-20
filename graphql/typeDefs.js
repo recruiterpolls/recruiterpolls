@@ -89,5 +89,6 @@ type Mutation {
     setResponseWatchlisted(id:String!, setValue:Boolean): PollResponse
     setResponseRejected(responses:[String]! rejected:Boolean!, setValue:Boolean): ID
     verifyEmail(vericationInput:VericationInput): User!
+   
 }
 `

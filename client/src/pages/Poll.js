@@ -35,7 +35,7 @@ function PollAnalytics() {
             checkedArray: [...checkedArray]
         },
         onCompleted(){
-
+            console.log(responses);
             console.log(checkedArray);
         },
         onError(error) {
@@ -50,10 +50,6 @@ function PollAnalytics() {
         }
     });
     console.log(errorCount);
-    var [checkedArray, setCheckedArray] = useState([]);
-    for (var i =0; i < 100; i++) {
-        checkedArray.push([false,false,false,false,false,false,false,false,false,false,false,false,false,false]);
-    }
     
     console.log(data);
     if (data == undefined) {
@@ -63,14 +59,20 @@ function PollAnalytics() {
     console.log(questionsArray);
 
 
-
+    
     const submitPollResponse = (e) => {
+        console.log("IN SUBMIT POLL RESPONSE");
+        console.log(questionsArray);
         var tempResponses = [];
         var tempChecked = [];
         for (var i = 0; i < questionsArray.length; i++) {
             var tempStr = "";
             var tempCheckedString = "";
             var options = document.getElementsByClassName("questionGroup" + i);
+            if(questionsArray[i].questionType == "Short answer"){
+                console.log(options[0].getElementsByTagName("input")[0].value);
+                tempStr += options[0].getElementsByTagName("input")[0].value.trim() + ", ";
+            }else{    
             for (var x = 0; x < options.length; x++) {
                 console.log(options[x]);
 
@@ -80,6 +82,7 @@ function PollAnalytics() {
                     //"0,1,"
                 }
             }
+        }
             tempStr = tempStr.slice(0, -2);
             tempCheckedString = tempCheckedString.slice(0, -2);             //could slice off more characters than we think.
             tempResponses.push(tempStr);
@@ -237,7 +240,7 @@ function PollAnalytics() {
                                         </>
                                     :
                                         <div className="box">
-                                            <Input>
+                                            <Input className = {"checked questionGroup"+ questionIndex}>
                                             </Input>
                                         </div>
                                     }

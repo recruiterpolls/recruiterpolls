@@ -55,15 +55,17 @@ module.exports = {
             for(var i = 0; i < questions.length; i++){
                 console.log(questions[i]);
                 var temp = [];
+                console.log(questions[i].options.length);
                 for(var q = 0; q < questions[i].options.length; q++){
                     temp.push(0);
+                    console.log(temp);
                 }
                 var newPollQuestion = new PollQuestion({
                     title:questions[i].title,
                     description:questions[i].description,
                     required:questions[i].required,
                     options:questions[i].options,
-                    checkedArray:temp,
+                    checkedArray:[...temp],
                     questionType:questions[i].questionType
                 })
 
@@ -134,7 +136,21 @@ module.exports = {
 
             total_count = 0;
 
+            console.log(responses);
+            console.log(checkedArray);
 
+            const res = await Poll.findOne({_id: new mongodb.ObjectID(id)});
+
+            this.getPollByID(id);
+
+            console.log((res.checkedArray));
+
+            for(var i = 0; i < checkedArray.length; i++){
+                
+            }
+                
+
+            //for(var )
 
            const newPollResponse = new PollResponse({
                 name,
@@ -145,7 +161,7 @@ module.exports = {
                 rejected: false,
                 watchlisted: false
             });
-            console.log(responses);
+            
             const res = await newPollResponse.save();
 
             Poll.findOneAndUpdate(
@@ -207,7 +223,7 @@ module.exports = {
             //return getPollByUser(email);
         }, async setResponseRejected(_, {id, email, rejected, setValue}){
             rejected = setValue;
-        }//, async getUserByResponse
+        }
         
     },
 
