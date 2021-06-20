@@ -163,12 +163,12 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
         //console.log(value);
 
         questions[id].questionType = e.target.innerText;
-        
+        console.log(e.target.innerText);
         console.log(JSON.stringify(questions));
         setQuestions([...questions]);
     }
-    console.log(questions[id]);
-    console.log(questions);
+    //console.log(questions[id]);
+    //console.log(questions);
     return (
         <>
         <Card fluid color='green'>

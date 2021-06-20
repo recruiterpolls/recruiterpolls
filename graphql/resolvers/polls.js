@@ -58,7 +58,8 @@ module.exports = {
                     title:questions[i].title,
                     description:questions[i].description,
                     required:questions[i].required,
-                    options:questions[i].options
+                    options:questions[i].options,
+                    questionType:questions[i].questionType
                 })
 
 
