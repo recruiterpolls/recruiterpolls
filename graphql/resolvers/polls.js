@@ -54,11 +54,16 @@ module.exports = {
 
             for(var i = 0; i < questions.length; i++){
                 console.log(questions[i]);
+                var temp = [];
+                for(var q = 0; q < questions[i].options.length; q++){
+                    temp.push(0);
+                }
                 var newPollQuestion = new PollQuestion({
                     title:questions[i].title,
                     description:questions[i].description,
                     required:questions[i].required,
-                    options:questions[i].options
+                    options:questions[i].options,
+                    checkedArray:temp
                 })
 
 
@@ -77,6 +82,7 @@ module.exports = {
             }
 
             console.log(resolve.questions);
+            console.log(resolve.checkedArray);
 
             return{
                 id: res.id,
@@ -91,18 +97,24 @@ module.exports = {
         
 
          
-        }, async createPollResponse(_, {id, name, email, responses}){ 
+        }, async createPollResponse(_, {id, name, email, responses, checkedArray}){ 
+            console.log("entered Create Poll");
+
             
-            /*
+            /*\
+
+            //["1", "1"]
+
             const{errors, valid} = validatePollResponse(title, JSON.parse(responses));
             if(!valid) {
                 throw new UserInputError('Error', { errors });
             }
                 */
             console.log("IN");
+            
             console.log(name);
             console.log(email);
-            console.log(responses);
+            //console.log(responses);
             const{errors, valid} = validatePollResponse(name, email, responses);
             
             if(!valid){
@@ -110,7 +122,7 @@ module.exports = {
                 throw new UserInputError('Error', {errors});
             }
             //responses = ["A", "B", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."];
-            console.log(responses);
+            //console.log(responses);
             //responses = JSON.parse(responses);
             // var responsesArray = JSON.parse(responses);
             //console.log(JSON.parse(responses));
@@ -119,11 +131,16 @@ module.exports = {
 
            // const newPollReponse = {name:name, email:email, responses:responses, watchlisted:false, rejected:false}
 
+            total_count = 0;
+
+
+
            const newPollResponse = new PollResponse({
                 name,
                 email,
                 createdAt: new Date().toISOString(),
                 responses: [...responses],//: JSON.parse(responses),
+                checkedArray:[...checkedArray],
                 rejected: false,
                 watchlisted: false
             });

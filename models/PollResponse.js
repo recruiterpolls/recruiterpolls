@@ -7,7 +7,8 @@ const pollResponseSchema = new Schema({
     createdAt: String,
     responses: Array,
     rejected: Boolean,
-    watchlisted: Boolean
+    watchlisted: Boolean,
+
 });
 
 

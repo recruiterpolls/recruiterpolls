@@ -6,7 +6,10 @@ const questionSchema = new Schema({
     description: String,
     questionType: String,
     required: Boolean,
-    options: Array
+    options: Array,
+    responses: Array,
+    checkedArray: Array
+    
 });
 
 

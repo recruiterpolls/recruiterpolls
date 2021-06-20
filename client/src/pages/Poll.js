@@ -18,6 +18,7 @@ function PollAnalytics() {
     var [firstName, setFirstName] = useState("");
     var [lastName, setLastName] = useState("");
     var [email, setEmail] = useState("");
+    var [checkedArray, setCheckedArray] = useState([]);
 
     const { loading, error, data } = useQuery(GET_POLL, {
         variables: {
@@ -31,16 +32,18 @@ function PollAnalytics() {
             name: firstName + " " + lastName,
             email: email,
             responses: [...responses],
-            checkedArray:checkedArray
+            checkedArray: [...checkedArray]
         },
         onCompleted(){
-            console.log(responses);
+
+            console.log(checkedArray);
         },
         onError(error) {
 
             // Handles bug where first button click results in error (regardless of anything else)
             console.log(JSON.stringify(error, null, 2));
-            console.log(responses);
+
+            console.log(checkedArray);
 
             
             return error;
@@ -73,19 +76,23 @@ function PollAnalytics() {
 
                 if (options[x].className.split(' ').includes("checked")) {
                     tempStr += options[x].getElementsByTagName("input")[0].getAttribute("value").trim() + ", ";
-                    tempCheckedString += x.toString() + ",";
+                    tempCheckedString += x.toString() + ", ";
+                    //"0,1,"
                 }
             }
             tempStr = tempStr.slice(0, -2);
             tempCheckedString = tempCheckedString.slice(0, -2);             //could slice off more characters than we think.
             tempResponses.push(tempStr);
+            tempChecked.push(tempCheckedString);
         }
         console.log(tempResponses);
         //responses = JSON.parse(JSON.stringify(tempResponses));
         
-        console.log(tempResponses);
+        console.log(tempChecked);
         setResponses(tempResponses);
+        setCheckedArray(tempChecked);
         responses = tempResponses;
+        checkedArray = tempChecked;
         console.log(responses);
         createPollClicked();
     }
@@ -252,7 +259,7 @@ function PollAnalytics() {
 }
 
 const CREATE_POLL_RESPONSE = gql`
-mutation createPollResponse($id: String $name: String $email: String $responses: [String]) {
+mutation createPollResponse($id: String $name: String $email: String $responses: [String] $checkedArray: [String]) {
   createPollResponse(
     id: $id
     name: $name

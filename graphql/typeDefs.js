@@ -18,6 +18,7 @@ type Poll {
     questions: [PollQuestion]                  #questions should be array
     responses: [PollResponse]
     email: String!
+   
 }
 
 type PollQuestion {
@@ -26,6 +27,7 @@ type PollQuestion {
     questionType: String
     required: Boolean
     options: [String]
+    checkedArray: [Int]
 }
 
 type PollResponse {
@@ -36,6 +38,8 @@ type PollResponse {
     responses: [String]
     watchlisted: Boolean
     rejected: Boolean
+ 
+   # responseCount: [String]
 
 }
 
@@ -77,7 +81,7 @@ type Mutation {
     register(registerInput: RegisterInput): User!
     login(loginInput: LoginInput): User!
     createPoll(createPollInput: CreatePollInput): Poll!
-    createPollResponse(id:String, name: String, email:String, responses: [String]): PollResponse
+    createPollResponse(id:String, name: String, email:String, responses: [String], checkedArray: [String]): PollResponse
     deletePoll(id:String!): Poll
     deletePollResponse(id:String!): Poll
     getPollByID(id:String!): Poll
