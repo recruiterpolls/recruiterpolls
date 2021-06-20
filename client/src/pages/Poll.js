@@ -213,23 +213,34 @@ function PollAnalytics() {
                                     <div>
                                         <Header as="h4" style={{margin: "0px", padding: "0px 0px 5px 0px", maxWidth:"400px", textAlign: "justify"}}>{question.description}</Header>
                                     </div>
-                                    {question.options.map( (option, index) => (
+                                    {question.questionType == "Multiple choice" ?
+                                        <>
+                                        { question.options.map( (option, index) => (
+                                                <div className="box">
+                                                    <div>
+                                                        <Checkbox
+                                                            className={'questionGroup' + questionIndex}
+                                                            value={question.options[index]}
+                                                            style = {{marginRight: "10px"}}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <Header as="h3" style = {{margin: "auto 10px", fontSize: "18px", paddingBottom:"6px"}}>
+                                                            {question.options[index]}
+                                                        </Header>
+                                                    </div>
+                                                </div>
+                                            
+                                            ))
+                                            
+                                        }
+                                        </>
+                                    :
                                         <div className="box">
-                                            <div>
-                                                <Checkbox
-                                                    className={'questionGroup' + questionIndex}
-                                                    value={question.options[index]}
-                                                    style = {{marginRight: "10px"}}
-                                                />
-                                            </div>
-                                            <div>
-                                                <Header as="h3" style = {{margin: "auto 10px", fontSize: "18px", paddingBottom:"6px"}}>
-                                                    {question.options[index]}
-                                                </Header>
-                                            </div>
+                                            <Input>
+                                            </Input>
                                         </div>
-                                    ))}
-                                    
+                                    }
 
                                     <div style={{paddingBottom:"12px"}}></div>
                                     

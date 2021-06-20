@@ -12,15 +12,16 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
     const state = {};
     const filterOptions = [
         { 
-            key: '1',
-            text: 'Short answer',
-            value: '4'
+            key: 'Multiple choice',
+            text: 'Multiple choice',
+            value: 'Multiple choice'
         },
         { 
-            key: '3',
-            text: 'Multiple choice',
-            value: '6'
+            key: 'Short answer',
+            text: 'Short answer',
+            value: 'Short answer'
         }
+        
     ]
 
     const deleteQuestion = (e) => {
@@ -156,7 +157,18 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
         setQuestions([...questions]);
     }
 
-    console.log(questions);
+    const handleQuestionTypeChange = e => {
+        const { value } = e.target;
+        console.log(e);
+        //console.log(value);
+
+        questions[id].questionType = e.target.innerText;
+        console.log(e.target.innerText);
+        console.log(JSON.stringify(questions));
+        setQuestions([...questions]);
+    }
+    //console.log(questions[id]);
+    //console.log(questions);
     return (
         <>
         <Card fluid color='green'>
@@ -183,7 +195,7 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
                 <Header as="h3" style={{padding: "0px 20px 0px 0px", marginBottom: "0px", marginTop: "10px", paddingBottom: "00px"}}>
                     Question Type
                 </Header>
-                <Dropdown style={{ marginTop: "10px"}} placeholder='Question type' selection options={filterOptions} />
+                <Dropdown style={{ marginTop: "10px"}} options={filterOptions} defaultValue={questions[id].questionType} onChange={handleQuestionTypeChange}/>
                 <Button id="x" data-ID={id}  color="red" onClick={deleteQuestion}  size="mini" style={{display: "inline-block !important"/*color: "rgb(208, 25, 25)"}, backgroundColor: "transparent"}*/}}>X</Button>
                 <Header as="h3" style={{padding: "0px 20px 0px 0px", marginBottom: "0px", marginTop: "10px", paddingBottom: "00px"}}>
                     Question Options
@@ -197,13 +209,13 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
             <Grid.Row>
             <Grid.Column width={16}>
             <Header as="h3" style={{padding: "0px 20px 0px 20px", marginBottom: "10px"}}>
-                Poll options
+                {questions[id].questionType == "Multiple choice" ? "Poll options" : "Example input"}
             </Header>
             <Form  style={{margin: "0px 20px", width: "100%"}}>
                 
-                {
-                        
-                        options.map((option, index) => (
+                {questions[id].questionType == "Multiple choice" ? 
+                        <>
+                        { options.map((option, index) => (
                             <div className="box">
                                 <Checkbox
                                     name='radioGroup'
@@ -221,17 +233,33 @@ function CreateQuestionCard({id, question: {title, description, questionType, re
                                     data-ID={id}
                                 />
                                 <Button  data-ID={id} data-index={index} onClick={deleteOption} id={index} id={"optionsInputChange" + id}>             
-                                    Delete
+                                    X
                                 </Button>
                             </div>
                         ))
+                        }
+                        <div className="box" style={{padding: "10px 30px", width: "100%"}}>
+                        <Button size="small" data-ID={id} onClick={addOption} id={"optionsInputChange" + id}>             
+                            Add Option
+                        </Button>
+                        </div>
+                    </>
+                :
+                    <div className="box" style={{padding: "0px  0px 10px 0px", width: "100%"}}>
+                        <Input
+                            id={"optionsInputChange" + id}
+                            onChange={handleOptionChange}
+                            name='options'
+                            placeholder="Write response here..."
+                            style = {{width: "80%", marginRight: "10px"}}
+                            data-index={0}
+                            data-ID={id}
+                        />
+                    </div>         
+                
                 }
 
-                <div className="box" style={{padding: "10px 30px", width: "100%"}}>
-                    <Button size="small" data-ID={id} onClick={addOption} id={"optionsInputChange" + id}>             
-                        Add Option
-                    </Button>
-                </div>
+                
                 
             </Form>
             </Grid.Column>

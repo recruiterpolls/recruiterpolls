@@ -88,7 +88,7 @@ function PollAnalytics() {
                                     <Grid.Column width={16}>
                                         <div className="box"style={{justifyContent: "space-between"}}>
                                             <div>
-                                                <p style={{padding: "6px 6px 0px 6px", margin: "0px"}}>Question {index + 1}</p>
+                                                <p style={{padding: "6px 6px 0px 6px", margin: "0px"}}>Question {index + 1} - {question.questionType}</p>
                                             </div>
                                             <div  style={{padding: "6px 6px 0px 6px", margin: "0px"}}>
                                                 <Button icon size="mini">
@@ -100,7 +100,8 @@ function PollAnalytics() {
                                 </Grid.Row>
 
                                 <Grid.Row style={{paddingTop: "0px"}}>
-                                    
+                                    { question.questionType == "Multiple choice" ? 
+                                    <>
                                     <Grid.Column width={6}>
                                         
                                         <div className="demowrapper">
@@ -117,22 +118,35 @@ function PollAnalytics() {
                                     <div>
                                         
                                         <Header as="h4" style={{margin: "0px", padding: "0px 0px 5px 0px"}}>{question.description}</Header>
-                                        <Header sub style={{margin: "10px 0px 0px 0px", padding: "0px 0px 5px 0px"}}>Options</Header>
-                                    </div>
-                                    { question.options.map( (option, index) => 
-                                        <>
-                                        <div className="box">
-                                            <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>{index + 1} </Header>
-                                            <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
-                                                {option}
-                                            </Header>
-                                        </div>
-
                                         
-                                        </>
-                                    )}
-
+                                    </div>
+                                    
+                                        
+                                        <Header sub style={{margin: "10px 0px 0px 0px", padding: "0px 0px 5px 0px"}}>Options</Header>
+                                        { question.options.map( (option, index) => (
+                                        
+                                            <div className="box">
+                                                <Header sub style={{fontSize: "14px",margin: "auto 10px auto 0px", marginRight: "10px !important"}}>{index + 1} </Header>
+                                                <Header as="h3" style = {{margin: "auto 0px", fontSize: "20px"}}>
+                                                    {option}
+                                                </Header>
+                                            </div>
+                                        ))
+                                        }
                                     </Grid.Column>
+                                    </>
+                                    :
+                                    <Grid.Column width={16} style={{paddingTop: "10px"}}>
+                                    <div>
+                                        
+                                        <Header as="h2" style={{margin: "0px", padding: "0px 5px 15px 5px"}}>{question.title}</Header>
+                                    
+                                    </div>
+                                        
+                                    </Grid.Column>
+                                    }
+
+                                    
                                 </Grid.Row>
                             </Grid>
                         </Card>

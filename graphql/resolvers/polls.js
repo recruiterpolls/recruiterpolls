@@ -63,7 +63,8 @@ module.exports = {
                     description:questions[i].description,
                     required:questions[i].required,
                     options:questions[i].options,
-                    checkedArray:temp
+                    checkedArray:temp,
+                    questionType:questions[i].questionType
                 })
 
 
